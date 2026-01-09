@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float damage;
     [SerializeField] private float meleeSpeed;
- 
+    [SerializeField] private Animator anim;
+
     public float moveSpeed = 5f;
 
     private Vector2 movement;
@@ -17,6 +19,7 @@ public class Player : MonoBehaviour
     public Camera mainCamera;
 
     float meleeCooldown = 0.5f;
+    float timeUntilMelee;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,17 +34,25 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKeyDown(0))
             {
-                Animation.SetTrigger("Attack");
-                timeUntilMelee = meleeCooldown;
+                anim.SetTrigger("Attack");
+                timeUntilMelee = meleeSpeed;
             }
         }
-        else  {
+        else
+        {
             timeUntilMelee -= Time.deltaTime;
         }
-
     }
 
- 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Enemy")
+        {
+            
+        }
+    }
+
+
 
     public void Move(InputAction.CallbackContext context)
     {
