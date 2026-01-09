@@ -48,7 +48,8 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            
+            //other.GetComponent<Enemy>().TakeDamage(damage);
+            Debug.Log("Enemy hit!");
         }
     }
 
