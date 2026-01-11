@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
             {
                 anim.SetTrigger("Attack");
                 timeUntilMelee = meleeSpeed;
+                meleeCooldown = 0.5f;
             }
         }
         else
