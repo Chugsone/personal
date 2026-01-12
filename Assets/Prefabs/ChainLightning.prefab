@@ -4965,3 +4965,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9db64a25552548e4e9a83455726e2012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  damage: 10
+  chainLightningEffect: {fileID: 0}
+  beenStruck: {fileID: 0}
+  amountToChain: 3
+  endObject: {fileID: 0}
+  parti: {fileID: 0}

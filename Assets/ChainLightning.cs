@@ -5,9 +5,10 @@ using UnityEngine;
 public class ChainLightning : MonoBehaviour
 {
 
-    private CircleCollider2D
+    private CircleCollider2D coll;
 
-    public LayerMask enemyLayer
+    public LayerMask enemyLayer;
+
     public float damage = 10f;
 
     public GameObject chainLightningEffect;
@@ -18,10 +19,9 @@ public class ChainLightning : MonoBehaviour
 
     private GameObject startObject;
     public GameObject endObject;
-
     private Animator ani;
 
-    public ParticalSystem parti;
+    public ParticleSystem parti;
 
     private int singleSpawns;
 
@@ -37,7 +37,7 @@ public class ChainLightning : MonoBehaviour
 
         coll = GetComponent<CircleCollider2D>();
         ani = GetComponent<Animator>();
-        parti = GetComponent<ParticalSystem>();
+        parti = GetComponent<ParticleSystem>();
 
         startObject = gameObject;
 
@@ -50,7 +50,7 @@ public class ChainLightning : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (enemyLayer == (enemyLayer | (1 << collision.gameObject.layer)) && !collision.GetComponentInChildren<EnemyStruck>())
         {
@@ -64,7 +64,7 @@ public class ChainLightning : MonoBehaviour
 
                 Instantiate(beenStruck, collision.gameObject.transform);
 
-                collision.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
+                collision.gameObject.GetComponent<EnemyHealth>().TakeDamage((int)damage);
 
                 ani.StopPlayback();
 
