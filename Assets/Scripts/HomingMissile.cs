@@ -21,6 +21,7 @@ public class HomingMissile : MonoBehaviour
         var enemyObj = GameObject.FindGameObjectWithTag("Enemy");
         if (enemyObj != null)
             target = enemyObj.transform;
+        Destroy(gameObject, 5f);
     }
 
     // Update is called once per frame

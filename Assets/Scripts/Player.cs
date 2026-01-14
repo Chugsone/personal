@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -78,5 +79,8 @@ public class Player : MonoBehaviour
         }
     }
 
-
+    internal void TakeDamage(int contactDamage)
+    {
+        throw new NotImplementedException();
+    }
 }
