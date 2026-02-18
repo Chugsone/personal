@@ -14,7 +14,7 @@ public class Projectiles1 : MonoBehaviour
     public float lifetime;
     public float knockbackTime;
 
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -44,49 +44,9 @@ public class Projectiles1 : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject);
-            PlayerMovement playerMovement = collision.gameObject.GetComponent<PlayerMovement>();
-            playerMovement.health += 2;
-            knockback -= playerMovement.health;
-            Knockback(collision);
-            Debug.Log($"Knockback: {knockback} --- Health: {playerMovement.health}");
-        }
-    }
 
-    void Knockback(Collider2D collision)
-    {
-        
-
-        Vector3 point = collision.ClosestPoint(transform.position);
-        Vector2 difference = (transform.position - point).normalized;
-
-        Vector2 launchangle = difference * knockback;
-
-
-
-        collision.attachedRigidbody.linearVelocity = launchangle;
-        
-
-        if (collision.TryGetComponent(out PlayerMovement player))
-        {
-            player.StartCoroutine(adjustWeight(player));
-        }
-    }
-
-    IEnumerator adjustWeight(PlayerMovement player)
-    {
-        player.weight = 0;
-
-        for (float i = 0; i < knockbackTime; i+=Time.deltaTime)
-        {
-            player.weight = i / knockbackTime;
-            yield return new WaitForEndOfFrame ();
-        }
-
-        player.weight = 1;
-       
     }
 }
+
+   
 

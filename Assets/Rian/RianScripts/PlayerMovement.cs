@@ -1,7 +1,9 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-using System.Collections;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+using System.Collections.Generic;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -14,9 +16,10 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private ParticleSystem dieParticles;
 
-    public float weight = 1;
+  
 
-    public float speed = 5f;
+    public float speed = 1f;
+    public float topSpeed = 10f;
     public Vector3 offset;
     public Vector2 boxsize;
     public float castDistance;
@@ -28,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     private Color playerColor;
     public float direction;
 
+    private Vector2 input;
+
     public AudioSource source;
     public AudioClip ShootFX, JumpFX;
   
@@ -37,9 +42,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool reloaded = true;
 
-    [SerializeField] public float _jumpForce = 15f;
-    private bool jumped = false;
-    [SerializeField] private LayerMask _groundLayer;
+    
+   
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -48,28 +52,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Move(InputAction.CallbackContext ctx)
-    {
-        movementInput = ctx.ReadValue<Vector2>(); 
-
-        if (movementInput.x != 0)
-        {
-            direction = Mathf.Sign(movementInput.x);
-        }
-    }
-    public bool IsGrounded()
-    {
-        if (Physics2D.BoxCast(transform.position + offset, boxsize, 0, -transform.up, castDistance, _groundLayer))
-        {
-            HasDoubleJump = true;
-            return true;
-
-        }
-        else
-        {
-            return false;
-        }
-    }
+   
     // Update is called once per frame
   
 
@@ -79,18 +62,20 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireCube(transform.position + offset + Vector3.down * castDistance, boxsize);
     }
 
-    
+    private void Update()
+    {
+       
+     
+
+    }
     void FixedUpdate()
     {
-        rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, (movementInput.x * speed), weight);
+        //rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, (movementInput.x * speed), weight);
 
         // Apply velocity in the FixedUpdate for consistent physics interactions (FixedUpdate is called at a fixed interval)
-        if (jumped)
-        {
-            
-            rb.linearVelocityY = _jumpForce;
-            jumped = false;
-        }
+        
+        rb.AddForce(movementInput * speed);
+        rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, 50f);
 
         // what happens when you die
         if (isDead)
@@ -98,7 +83,12 @@ public class PlayerMovement : MonoBehaviour
             ParticleSystem newParticle = Instantiate(dieParticles, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
+
+
+
     }
+
+ 
 
     public void AimGampePad(InputAction.CallbackContext context)
     {
@@ -130,6 +120,11 @@ public class PlayerMovement : MonoBehaviour
             
         }
     }
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        movementInput = context.ReadValue<Vector2>();
+    }
     IEnumerator GunCooldown()
     {
         yield return new WaitForSeconds(reloadTimer);
@@ -144,25 +139,6 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    public void Jump(InputAction.CallbackContext ctx)
-    {
-        if (ctx.ReadValue<float>() == 1 && weight>=1)
-        {
-            if (IsGrounded())
-            {
-                rb.linearVelocityY = _jumpForce;
-                AudioSource.PlayClipAtPoint(JumpFX, Vector2.zero);
-            }
-            if (!IsGrounded())
-            {
-                if (HasDoubleJump == true)
-                {
-                    rb.linearVelocityY = _jumpForce;
-                    AudioSource.PlayClipAtPoint(JumpFX, Vector2.zero);
-                    HasDoubleJump = false;
-                }
-            }
-        }
-    }
+   
 }
 

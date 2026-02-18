@@ -221,9 +221,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1413920215}
   - component: {fileID: 1413920214}
-  - component: {fileID: 1413920213}
   - component: {fileID: 1413920212}
   - component: {fileID: 1413920216}
+  - component: {fileID: 1413920217}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -258,22 +258,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1413920213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1413920211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 513e53190228f0f48bc1ba9829e8d103, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 1413920212}
-  moveSpeed: 5
-  projectilePrefab: {fileID: 0}
-  mainCamera: {fileID: 925037515}
 --- !u!212 &1413920214
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -371,8 +355,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1413920213}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+      - m_Target: {fileID: 1413920217}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 0
         m_Arguments:
@@ -391,7 +375,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Look[/Mouse/delta,/Pen/delta]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1413920213}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: Shoot
         m_Mode: 0
@@ -474,6 +458,42 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1413920217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413920211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b10e3c5a9e7aa4a87ce06c2275f92e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 1413920212}
+  gun: {fileID: 0}
+  isDead: 0
+  dieParticles: {fileID: 0}
+  speed: 5
+  topSpeed: 10
+  offset: {x: 0, y: 0, z: 0}
+  boxsize: {x: 0, y: 0}
+  castDistance: 0
+  HasDoubleJump: 1
+  projectilePrefab: {fileID: 0}
+  mainCamera: {fileID: 0}
+  health: 0
+  direction: 0
+  source: {fileID: 0}
+  ShootFX: {fileID: 0}
+  JumpFX: {fileID: 0}
+  reloadTimer: 0.5
+  spawn: {fileID: 0}
+  reloaded: 1
+  _jumpForce: 15
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &2051004706
 PrefabInstance:
   m_ObjectHideFlags: 0
