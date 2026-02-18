@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float damage;
     [SerializeField] private float meleeSpeed;
     [SerializeField] private Animator anim;
+    [SerializeField] private GameObject gun;
 
     public float moveSpeed = 5f;
 
@@ -30,30 +31,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        rb.linearVelocity = movement * moveSpeed;
-        if (timeUntilMelee > 0)
-        {
-            if (Input.GetKeyDown(0))
-            {
-                anim.SetTrigger("Attack");
-                timeUntilMelee = meleeSpeed;
-                meleeCooldown = 0.5f;
-            }
-        }
-        else
-        {
-            timeUntilMelee -= Time.deltaTime;
-        }
+        
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void Aim(InputAction.CallbackContext context)
     {
-        if (other.tag == "Enemy")
-        {
-            //other.GetComponent<Enemy>().TakeDamage(damage);
-            Debug.Log("Enemy hit!");
-        }
+        gun.transform.right = context.ReadValue<Vector2>();
     }
+
 
 
 
@@ -73,7 +58,7 @@ public class Player : MonoBehaviour
     {
         if (context.performed)
         {
-            Vector2 mouseWorldPosition = (Vector2) mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mouseWorldPosition = (Vector2)mainCamera.ScreenToWorldPoint(Input.mousePosition);
             float angle = Mathf.Atan2(mouseWorldPosition.y - transform.position.y, mouseWorldPosition.x - transform.position.x) * Mathf.Rad2Deg;
             GameObject proj = Instantiate(projectilePrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, angle)));
         }
@@ -84,3 +69,4 @@ public class Player : MonoBehaviour
         throw new NotImplementedException();
     }
 }
+//67
