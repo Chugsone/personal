@@ -24,17 +24,18 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 boxsize;
     public float castDistance;
     private Vector2 movementInput;
-    public bool HasDoubleJump = true;
+   
     public GameObject projectilePrefab;
     public Camera mainCamera;
     public int health = 0;
     private Color playerColor;
     public float direction;
+    public PlayerMovement playerMovement;
 
     private Vector2 input;
 
     public AudioSource source;
-    public AudioClip ShootFX, JumpFX;
+    public AudioClip ShootFX;
   
     [SerializeField] public float reloadTimer = 0.5f;
 
@@ -47,6 +48,16 @@ public class PlayerMovement : MonoBehaviour
     public float KBTotalTime;
 
     public bool knockFromRight;
+
+    public float dashPower;
+
+
+
+    private void Awake()
+    {
+        playerMovement = GetComponent<PlayerMovement>();
+    }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -106,9 +117,24 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void Aim(InputAction.CallbackContext context)
+    {
+        if (context.control.device is Mouse)
+            AimMouse(context);
+        else if (context.control.device is Gamepad)
+            AimGamepad(context);
+    }
+
+
+    private void AimMouse(InputAction.CallbackContext context)
+    {
+        Vector2 mousepos = Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>());
+        gun.transform.right = mousepos - (Vector2)gun.transform.position;
+    }
+
  
 
-    public void AimGampePad(InputAction.CallbackContext context)
+    private void AimGamepad(InputAction.CallbackContext context)
     {
         if (context.ReadValue<Vector2>() != Vector2.zero)
         {
@@ -117,12 +143,10 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public void AimMouse(InputAction.CallbackContext context)
+    public void Dash()
     {
-        Vector2 mousepos = Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>());
-        gun.transform.right = mousepos - (Vector2)gun.transform.position;
+        rb.linearVelocity = new Vector2(playerMovement.direction * dashPower, 0f);
     }
-
     public void Shoot(InputAction.CallbackContext context)
     {
        
