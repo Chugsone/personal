@@ -5,7 +5,7 @@ public class StartMenu : MonoBehaviour
 {
     public void StartButton()
     {
-        SceneManager.LoadScene("Level Select");
+        SceneManager.LoadScene("Tutorial");
         Debug.Log("Player pressed button 'Start', loading scene 'Tutorial'");
     }
 
