@@ -244,7 +244,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 3.5
   m_AngularDamping: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -474,8 +474,8 @@ MonoBehaviour:
   gun: {fileID: 0}
   isDead: 0
   dieParticles: {fileID: 0}
-  speed: 5
-  topSpeed: 10
+  speed: 25
+  topSpeed: 75
   offset: {x: 0, y: 0, z: 0}
   boxsize: {x: 0, y: 0}
   castDistance: 0
@@ -490,10 +490,6 @@ MonoBehaviour:
   reloadTimer: 0.5
   spawn: {fileID: 0}
   reloaded: 1
-  _jumpForce: 15
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1001 &2051004706
 PrefabInstance:
   m_ObjectHideFlags: 0
