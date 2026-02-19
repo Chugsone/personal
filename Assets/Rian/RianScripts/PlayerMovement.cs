@@ -42,8 +42,11 @@ public class PlayerMovement : MonoBehaviour
 
     public bool reloaded = true;
 
-    
-   
+    public float KBForce;
+    public float KBCounter;
+    public float KBTotalTime;
+
+    public bool knockFromRight;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -73,12 +76,27 @@ public class PlayerMovement : MonoBehaviour
         //rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, (movementInput.x * speed), weight);
 
         // Apply velocity in the FixedUpdate for consistent physics interactions (FixedUpdate is called at a fixed interval)
-        
-        rb.AddForce(movementInput * speed);
-        rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, 50f);
 
-        // what happens when you die
-        if (isDead)
+        if (KBCounter <= 0)
+        {
+            rb.AddForce(movementInput * speed);
+            rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, 50f);
+        }
+        else
+        {
+            if (knockFromRight == true)
+            {
+                rb.linearVelocity = new Vector2(-KBForce, KBForce);
+            }
+            if (knockFromRight == false)
+            {
+                rb.linearVelocity = new Vector2(KBForce, KBForce);
+            }
+            KBCounter -= Time.deltaTime;
+        }
+
+            // what happens when you die
+            if (isDead)
         {
             ParticleSystem newParticle = Instantiate(dieParticles, transform.position, Quaternion.identity);
             Destroy(gameObject);
