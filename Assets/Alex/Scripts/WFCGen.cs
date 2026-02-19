@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
+using System.Linq;
 
 public class WFCGen : MonoBehaviour
 {
@@ -14,16 +15,26 @@ public class WFCGen : MonoBehaviour
     [Tooltip("The max amount of rooms to spawn")][SerializeField] private int maxRooms = 5;
     [Tooltip("The starting room.")][SerializeField] private RoomData startRoom;
     [Tooltip("The list of all rooms")][SerializeField] private RoomData[] allRooms;
-    [Tooltip("Starting Offset")][SerializeField] private Vector3Int startOffset = new Vector3Int(0, 350, 0);
+    [Tooltip("Starting Offset")][SerializeField] private Vector3Int startOffset = new Vector3Int(0, 0, 0);
 
     private bool geenrated;
+    private GameObject gatePrefab;
     private Tilemap tilemap;
     private Dictionary<Vector2Int, RoomData> grid = new();
     private List<Vector2Int> frontier = new();
 
+    private void Awake()
+    {
+        gatePrefab = Resources.Load<GameObject>("Prefabs/Gate");
+    }
+
     void Start()
     {
         tilemap = GameObject.FindWithTag("Ground").GetComponent<Tilemap>();
+        Generate(startOffset);
+        PlaceObjects(startRoom, startOffset);
+
+
     }
 
     public void Generate(Vector3Int pos)
@@ -74,17 +85,86 @@ public class WFCGen : MonoBehaviour
 
     private void PlaceRoom(RoomData room, Vector2Int gridPos)
     {
+        
+
         grid[gridPos] = room;
         Debug.Log(gridPos);
         Vector3Int worldPos = startOffset + new Vector3Int(gridPos.x * (room.size.x), gridPos.y * (room.size.y), 0);
-        Debug.Log(worldPos);
-
         for (int i = 0; i < room.tiles.Count; i++)
         {
             Vector3Int pos = room.positions[i] + worldPos;
 
             tilemap.SetTile(pos, room.tiles[i]);
         }
+    }
+
+    public void PlaceObjects(RoomData room, Vector3Int pos)
+    {
+        List<GameObject> gates = new List<GameObject>();
+        List<Vector2Int> neighbors = new List<Vector2Int>();
+        if (room.rightExit)
+        {
+            GameObject gate = Instantiate(gatePrefab, new Vector2(pos.x + 22, pos.y), Quaternion.identity);
+            gates.Add(gate);
+            gate.GetComponent<Gate>().pos = pos + new Vector3Int(room.size.x, 0 ,0);
+            Vector2Int key = grid.First(item => item.Value == room).Key;
+            Vector2Int newKey = key + Vector2Int.right;
+            neighbors.Add(newKey);
+            grid[newKey].leftExit = false;
+            gate.transform.localScale = new Vector3(1f, 4f, 1f);
+
+        }
+        if (room.downExit)
+        {
+            GameObject gate = Instantiate(gatePrefab, new Vector2(pos.x, pos.y - 6), Quaternion.identity);
+            gates.Add(gate);
+            gate.GetComponent<Gate>().pos = pos - new Vector3Int(0, room.size.y, 0);
+            Vector2Int key = grid.First(item => item.Value == room).Key;
+            Vector2Int newKey = key + Vector2Int.down;
+            neighbors.Add(newKey);
+            grid[newKey].upExit = false;
+
+
+        }
+        if (room.upExit)
+        {
+            GameObject gate = Instantiate(gatePrefab, new Vector2(pos.x, pos.y + 17), Quaternion.identity);
+            gates.Add(gate);
+            gate.GetComponent<Gate>().pos = pos + new Vector3Int(0, room.size.y, 0);
+            Vector2Int key = grid.First(item => item.Value == room).Key;
+            Vector2Int newKey = key + Vector2Int.up;
+            neighbors.Add(newKey);
+            grid[newKey].downExit = false;
+
+
+
+        }
+        if (room.leftExit)
+        {
+            GameObject gate = Instantiate(gatePrefab, new Vector2(pos.x - 22, pos.y), Quaternion.identity);
+            gate.transform.localScale = new Vector3(1f, 4f, 1f);
+            gates.Add(gate);
+            gate.GetComponent<Gate>().pos = pos - new Vector3Int(room.size.x, 0, 0);
+
+            Vector2Int key = grid.First(item => item.Value == room).Key;
+            Vector2Int newKey = key + Vector2Int.left;
+            neighbors.Add(newKey);
+            grid[newKey].rightExit = false;
+
+
+
+        }
+
+        int i = 0;
+        foreach (GameObject gate in gates)
+        {
+            Gate gateScript = gate.GetComponent<Gate>();
+            gateScript.parent = this;
+            gateScript.neighbor = grid[neighbors[i]];
+            i++;
+        }
+
+
     }
 
     private bool Compatible(RoomData a, RoomData b, ExitDirections directions)
