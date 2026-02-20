@@ -138,6 +138,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 54608973358975474, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: Lens.OrthographicSize
+      value: 3.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100638120806664610, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: orthographic size
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 4695628315788831691, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
