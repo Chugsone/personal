@@ -32,7 +32,6 @@ public class WFCGen : MonoBehaviour
     {
         tilemap = GameObject.FindWithTag("Ground").GetComponent<Tilemap>();
         Generate(startOffset);
-        PlaceObjects(startRoom, startOffset);
 
 
     }
@@ -98,74 +97,8 @@ public class WFCGen : MonoBehaviour
         }
     }
 
-    public void PlaceObjects(RoomData room, Vector3Int pos)
-    {
-        List<GameObject> gates = new List<GameObject>();
-        List<Vector2Int> neighbors = new List<Vector2Int>();
-        if (room.rightExit)
-        {
-            GameObject gate = Instantiate(gatePrefab, new Vector2(pos.x + 22, pos.y), Quaternion.identity);
-            gates.Add(gate);
-            gate.GetComponent<Gate>().pos = pos + new Vector3Int(room.size.x, 0 ,0);
-            Vector2Int key = grid.First(item => item.Value == room).Key;
-            Vector2Int newKey = key + Vector2Int.right;
-            neighbors.Add(newKey);
-            grid[newKey].leftExit = false;
-            gate.transform.localScale = new Vector3(1f, 4f, 1f);
-
-        }
-        if (room.downExit)
-        {
-            GameObject gate = Instantiate(gatePrefab, new Vector2(pos.x, pos.y - 6), Quaternion.identity);
-            gates.Add(gate);
-            gate.GetComponent<Gate>().pos = pos - new Vector3Int(0, room.size.y, 0);
-            Vector2Int key = grid.First(item => item.Value == room).Key;
-            Vector2Int newKey = key + Vector2Int.down;
-            neighbors.Add(newKey);
-            grid[newKey].upExit = false;
-
-
-        }
-        if (room.upExit)
-        {
-            GameObject gate = Instantiate(gatePrefab, new Vector2(pos.x, pos.y + 17), Quaternion.identity);
-            gates.Add(gate);
-            gate.GetComponent<Gate>().pos = pos + new Vector3Int(0, room.size.y, 0);
-            Vector2Int key = grid.First(item => item.Value == room).Key;
-            Vector2Int newKey = key + Vector2Int.up;
-            neighbors.Add(newKey);
-            grid[newKey].downExit = false;
-
-
-
-        }
-        if (room.leftExit)
-        {
-            GameObject gate = Instantiate(gatePrefab, new Vector2(pos.x - 22, pos.y), Quaternion.identity);
-            gate.transform.localScale = new Vector3(1f, 4f, 1f);
-            gates.Add(gate);
-            gate.GetComponent<Gate>().pos = pos - new Vector3Int(room.size.x, 0, 0);
-
-            Vector2Int key = grid.First(item => item.Value == room).Key;
-            Vector2Int newKey = key + Vector2Int.left;
-            neighbors.Add(newKey);
-            grid[newKey].rightExit = false;
-
-
-
-        }
-
-        int i = 0;
-        foreach (GameObject gate in gates)
-        {
-            Gate gateScript = gate.GetComponent<Gate>();
-            gateScript.parent = this;
-            gateScript.neighbor = grid[neighbors[i]];
-            i++;
-        }
-
-
-    }
+  
+      
 
     private bool Compatible(RoomData a, RoomData b, ExitDirections directions)
     {
