@@ -8,13 +8,17 @@ public class EnemyBulletScript : MonoBehaviour
     public GameObject player;
     private Rigidbody2D rb;
     public float force;
-    public float timer;
+    public int damage;
+    private PlayerHealth playerHealth;
+    public float speed;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Destroy(gameObject, 10);
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
-
+        playerHealth = player.GetComponent<PlayerHealth>();
         Vector3 direction = player.transform.position - transform.position;
         rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * force;
 
@@ -25,18 +29,18 @@ public class EnemyBulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-
-        if (timer > 10)
-        {
-            Destroy(gameObject);
-        }
+        
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (true) // other.gameObject.Comparetag("Player"))
+        if (collision.gameObject.tag == "Player")
         {
+            Debug.Log("Hit Player");
+            playerHealth.TakeDamage(damage);
             Destroy(gameObject);
         }
     }
+
+   
 }
