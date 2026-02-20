@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockback: -25
-  speed: 10
+  speed: 35
   lifetime: 3
   knockbackTime: 1
 --- !u!212 &3125840006344363014

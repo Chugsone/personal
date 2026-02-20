@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &1413920218 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8483400121755777894, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+  m_PrefabInstance: {fileID: 7443908667168208264}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b10e3c5a9e7aa4a87ce06c2275f92e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7443908667168208264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -167,9 +178,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7791142584603094280, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7861661401669436755, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
       propertyPath: m_Name
       value: player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8483400121755777894, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: dashPower
+      value: 367
+      objectReference: {fileID: 0}
+    - target: {fileID: 8483400121755777894, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: dashCooldown
+      value: 0.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 8639026258547056324, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8639026258547056324, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8639026258547056324, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1413920218}
+    - target: {fileID: 8639026258547056324, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8639026258547056324, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8639026258547056324, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerMovement, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8639026258547056324, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

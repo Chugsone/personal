@@ -49,12 +49,16 @@ public class PlayerMovement : MonoBehaviour
 
     public bool knockFromRight;
 
-    public float dashPower;
+    public float dashPower = 3.67f;
+
+    private float dashTimer = 0f;
+    [SerializeField] private float dashCooldown = .25f;
 
 
 
     private void Awake()
     {
+        dashTimer = dashCooldown;
         playerMovement = GetComponent<PlayerMovement>();
     }
 
@@ -78,7 +82,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-       
+        if (dashTimer > 0)
+        {
+            dashTimer -= Time.deltaTime;
+        }
      
 
     }
@@ -143,9 +150,17 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public void Dash()
+    public void Dash(InputAction.CallbackContext context)
     {
-        rb.linearVelocity = new Vector2(playerMovement.direction * dashPower, 0f);
+        if (!context.performed || dashTimer > 0)
+        {
+            return;
+        }
+        dashTimer = dashCooldown;
+        rb.linearVelocity = movementInput * dashPower;
+       
+
+
     }
     public void Shoot(InputAction.CallbackContext context)
     {
