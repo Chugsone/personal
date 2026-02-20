@@ -315,14 +315,13 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   boxsize: {x: 0, y: 0}
   castDistance: 0
-  HasDoubleJump: 1
   projectilePrefab: {fileID: 0}
   mainCamera: {fileID: 0}
   health: 0
   direction: 0
+  playerMovement: {fileID: 0}
   source: {fileID: 0}
   ShootFX: {fileID: 0}
-  JumpFX: {fileID: 0}
   reloadTimer: 0.5
   spawn: {fileID: 0}
   reloaded: 1
@@ -330,6 +329,7 @@ MonoBehaviour:
   KBCounter: 0
   KBTotalTime: 0
   knockFromRight: 0
+  dashPower: 0
 --- !u!50 &1164507163
 Rigidbody2D:
   serializedVersion: 5
