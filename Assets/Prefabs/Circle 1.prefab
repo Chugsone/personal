@@ -104,7 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   force: 5
-  damage: 21
+  damage: 5
   speed: 3.57
 --- !u!50 &1053878050556960844
 Rigidbody2D:
