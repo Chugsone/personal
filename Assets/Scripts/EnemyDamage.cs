@@ -5,8 +5,21 @@ using UnityEngine;
 public class EnemyDamage : MonoBehaviour
 {
     public int damage;
-    public PlayerHealth playerHealth;
+    private Stats playerHealth;
     public PlayerMovement playerMovement;
+
+    void Start()
+    {
+        if (GameObject.FindWithTag("Player").TryGetComponent<Stats>(out Stats stats))
+        {
+            playerHealth = stats;
+        }
+        else
+        {
+            Debug.LogWarning("Player does not have stats script");
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player")
@@ -20,7 +33,7 @@ public class EnemyDamage : MonoBehaviour
             {
                 playerMovement.knockFromRight = false;
             }
-            playerHealth.TakeDamage(damage);
+            playerHealth.Health -= damage;
         }
     }
 }

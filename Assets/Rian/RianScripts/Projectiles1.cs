@@ -41,6 +41,17 @@ public class Projectiles1 : MonoBehaviour
 
             Destroy(gameObject);
         }
+        else if (collision.gameObject.CompareTag("Destructible"))
+        {
+            if (collision.gameObject.TryGetComponent<Destructible>(out Destructible des))
+            {
+                des.Destruct();
+            }
+        }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            
+        }
 
 
 

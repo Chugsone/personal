@@ -9,7 +9,7 @@ public class EnemyBulletScript : MonoBehaviour
     private Rigidbody2D rb;
     public float force;
     public int damage;
-    private PlayerHealth playerHealth;
+    private Stats playerHealth;
     public float speed;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,7 +18,7 @@ public class EnemyBulletScript : MonoBehaviour
         Destroy(gameObject, 10);
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
-        playerHealth = player.GetComponent<PlayerHealth>();
+        playerHealth = player.GetComponent<Stats>();
         Vector3 direction = player.transform.position - transform.position;
         rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * force;
 
@@ -37,7 +37,7 @@ public class EnemyBulletScript : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Debug.Log("Hit Player");
-            playerHealth.TakeDamage(damage);
+            playerHealth.Health -= damage;
             Destroy(gameObject);
         }
     }
