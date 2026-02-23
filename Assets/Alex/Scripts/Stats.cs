@@ -24,7 +24,7 @@ public class Stats : MonoBehaviour
 
             if (value < _health) //Removing Health
             {
-                if (healParticles != null)
+                if (damageParticles != null)
                 {
                     damageParticles.Play();
                 }
@@ -93,7 +93,7 @@ public class Stats : MonoBehaviour
     [Tooltip("How much exp is required to level up")] [SerializeField] private int _expReq = 100;
     [HideInInspector] public int ExperienceRequirement 
     {
-        get { return _exp; }
+        get { return _expReq; }
         set
         {
             _expReq = value;

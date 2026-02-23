@@ -26,6 +26,7 @@ public class Destructible : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().sprite = null;
         gameObject.GetComponent<Collider2D>().isTrigger = true;
         destroyed = true;
+        _playerStats.Experience += _expGained;
     }
 
     void FixedUpdate()
@@ -34,7 +35,6 @@ public class Destructible : MonoBehaviour
         {
             if (!breakParticles.IsAlive())
             {
-                _playerStats.Experience += _expGained;
                 Destroy(gameObject);
             }
         }

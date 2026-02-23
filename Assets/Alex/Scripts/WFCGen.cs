@@ -58,7 +58,7 @@ public class WFCGen : MonoBehaviour
         grid.Clear();
         frontier.Clear();
 
-        Vector2Int startPos = Vector2Int.zero; //Maybe add offset here
+        Vector2Int startPos = Vector2Int.zero; 
         PlaceRoom(startRoom, startPos);
         frontier.Add(startPos);
 

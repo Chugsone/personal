@@ -8,8 +8,8 @@ public class Pathfinder : MonoBehaviour
     private Vector3 gizmoTarget;
     private bool[,] walkableGrid;
     private Vector3Int gridOrigin;
-    private int gridWidth; //Change this to use roomdata later
-    private int gridHeight; //Change this to use roomdata later
+    private int gridWidth; 
+    private int gridHeight; 
 
     private BoundsInt debugBounds;
 
