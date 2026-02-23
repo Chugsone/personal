@@ -8,14 +8,16 @@ public class SpawnerTile : Tile
 
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
     {
-        if (Application.isPlaying)
+        if (!Application.isPlaying)
         {
-            Tilemap tm = tilemap.GetComponent<Tilemap>();
-            tm.SetTile(position, null);
-            Instantiate(enemyPrefab, position, Quaternion.identity);
-            return true;
+            return false;
         }
 
-        return false;
+        Tilemap tm = tilemap.GetComponent<Tilemap>();
+        tm.SetTile(position, null);
+        Vector3 worldPos = tm.GetCellCenterWorld(position);
+        Instantiate (enemyPrefab, worldPos, Quaternion.identity);
+        return true;
+        
     }
 }

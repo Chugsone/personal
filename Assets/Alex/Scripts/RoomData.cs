@@ -6,12 +6,9 @@ using UnityEngine.Tilemaps;
 public class RoomData : ScriptableObject
 {
 
-
-
     public Vector2Int size;
-    public List<Vector3Int> positions = new();
-    public List<TileBase> tiles = new();
     public int Weight;
+    public List<TilePlacement> tiles = new();
 
     public bool leftExit;
     public bool rightExit;
@@ -19,4 +16,20 @@ public class RoomData : ScriptableObject
     public bool downExit;
 
 
+}
+
+
+[System.Serializable]
+public struct TilePlacement
+{
+    public TileBase tile;
+    public Vector3Int position;
+    public TileLayer layer;
+}
+
+public enum TileLayer
+{
+    Background,
+    Ground,
+    Decoration
 }

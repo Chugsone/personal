@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Campfire : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class Campfire : MonoBehaviour
     private Animator animator;
     private Stats playerStats;
     private bool interacted;
+    private Light2D campfireLight;
     [SerializeField] private Sprite outSprite;
     [SerializeField] private int healAmount = 30;
 
@@ -19,6 +21,7 @@ public class Campfire : MonoBehaviour
         {
             Debug.LogWarning("Player doesnt have a stats script, either update player or campfire script.");
         }
+        campfireLight = gameObject.GetComponent<Light2D>();
         animator = GetComponent<Animator>();
         fireRenderer = GetComponent<SpriteRenderer>();
 
@@ -26,13 +29,11 @@ public class Campfire : MonoBehaviour
 
     public void UseCampfire()
     {
-        Debug.Log("used");
         if (interacted)
         {
             return;
         }
-
-        Debug.Log("test");
+        campfireLight.enabled = false;
         animator.enabled = false;
         fireRenderer.sprite = outSprite;
         interacted = true;

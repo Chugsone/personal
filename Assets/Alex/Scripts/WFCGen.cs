@@ -19,21 +19,32 @@ public class WFCGen : MonoBehaviour
 
     private bool geenrated;
     private GameObject gatePrefab;
-    private Tilemap tilemap;
+    [SerializeField] private Tilemap backgroundTilemap;
+    [SerializeField] private Tilemap groundTilemap;
+    [SerializeField] private Tilemap decorationTilemap;
     private Dictionary<Vector2Int, RoomData> grid = new();
     private List<Vector2Int> frontier = new();
 
+    public static WFCGen Instance {get; private set; }
+
     private void Awake()
     {
+        Instance = this;
         gatePrefab = Resources.Load<GameObject>("Prefabs/Gate");
     }
 
     void Start()
     {
-        tilemap = GameObject.FindWithTag("Ground").GetComponent<Tilemap>();
         Generate(startOffset);
 
 
+    }
+
+    void Update()
+    {
+        Debug.Log("Bounds min: " + groundTilemap.cellBounds.min);
+        Debug.Log("Bounds max: " + groundTilemap.cellBounds.max);
+        
     }
 
     public void Generate(Vector3Int pos)
@@ -85,19 +96,46 @@ public class WFCGen : MonoBehaviour
     private void PlaceRoom(RoomData room, Vector2Int gridPos)
     {
         
-
         grid[gridPos] = room;
-        Debug.Log(gridPos);
-        Vector3Int worldPos = startOffset + new Vector3Int(gridPos.x * (room.size.x), gridPos.y * (room.size.y), 0);
-        for (int i = 0; i < room.tiles.Count; i++)
-        {
-            Vector3Int pos = room.positions[i] + worldPos;
 
-            tilemap.SetTile(pos, room.tiles[i]);
+        Vector3Int worldPos = startOffset + new Vector3Int(gridPos.x * (room.size.x), gridPos.y * (room.size.y), 0);
+        
+        GameObject roomGO = new GameObject($"Room_({gridPos.x}X, {gridPos.y}Y)");
+        roomGO.transform.position = worldPos;
+
+        GameObject enemiesGO = new GameObject("Enemies");
+        enemiesGO.transform.parent = roomGO.transform;
+        Pathfinder pathfinder = enemiesGO.AddComponent<Pathfinder>();
+        pathfinder.groundTilemap = groundTilemap;
+        BoundsInt roomBounds = new BoundsInt(new Vector3Int(worldPos.x - room.size.x / 2, worldPos.y - room.size.y / 2, 0), new Vector3Int(room.size.x, room.size.y, 1));
+        pathfinder.BuildGrid(roomBounds);
+        
+        Debug.Log("World: " + worldPos + " -> Cell: " + groundTilemap.WorldToCell(worldPos));
+
+       
+
+        foreach (var tileData in room.tiles)
+        {
+            Vector3Int pos = tileData.position + worldPos;
+            switch (tileData.layer)
+            {
+                case TileLayer.Background:
+                    backgroundTilemap.SetTile(pos, tileData.tile);
+                    break;
+                case TileLayer.Ground:
+                    groundTilemap.SetTile(pos, tileData.tile);
+                    pathfinder.SetBlocked(groundTilemap.GetCellCenterWorld(pos), true);
+                    break;
+                case TileLayer.Decoration:
+                    decorationTilemap.SetTile(pos, tileData.tile);
+                    break;
+            }
         }
+        
     }
 
-  
+
+    
       
 
     private bool Compatible(RoomData a, RoomData b, ExitDirections directions)

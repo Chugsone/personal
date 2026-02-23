@@ -3,7 +3,10 @@ using UnityEngine.Tilemaps;
 
 public class RoomMaker : MonoBehaviour
 {
-    public Tilemap sourceTilemap;
+    public Tilemap backgroundTilemap;
+    public Tilemap groundTilemap;
+    public Tilemap decorationTilemap;
+
     public RoomData roomData;
 
     public void CaptureRoom()
@@ -13,42 +16,67 @@ public class RoomMaker : MonoBehaviour
             return;
             //Make it create a new room scriptable object
         }
-        roomData.positions.Clear();
         roomData.tiles.Clear();
 
-        BoundsInt bounds = sourceTilemap.cellBounds;
+        CaptureFromTilemap(backgroundTilemap, TileLayer.Background);
+        CaptureFromTilemap(groundTilemap, TileLayer.Ground);
+        CaptureFromTilemap(decorationTilemap, TileLayer.Decoration);
 
-        foreach (Vector3Int pos in bounds.allPositionsWithin)
-        {
-            TileBase tile = sourceTilemap.GetTile(pos);
-            if (tile == null)
-            {
-                continue;
-            }
+        
 
-            roomData.positions.Add(pos);
-            roomData.tiles.Add(tile);
-
-
-        }
-
+        BoundsInt bounds = groundTilemap.cellBounds;
         roomData.size = new Vector2Int(bounds.size.x, bounds.size.y);
+
 #if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(roomData);
 #endif
 
     }
 
+    private void CaptureFromTilemap(Tilemap tilemap, TileLayer layer)
+    {
+        if (tilemap == null)
+        {
+            return;
+        }
+
+        BoundsInt bounds = tilemap.cellBounds;
+
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        {
+            TileBase tile = tilemap.GetTile(pos);
+            if (tile == null)
+            {
+                continue;
+            }
+
+            TilePlacement placement = new TilePlacement {tile = tile, position = pos, layer = layer};
+            roomData.tiles.Add(placement);
+        }
+    }
+
 
 
     public void LoadRoom()
     {
-        sourceTilemap.ClearAllTiles();
-        for (int i = 0; i < roomData.tiles.Count; i++)
+        backgroundTilemap.ClearAllTiles();
+        groundTilemap.ClearAllTiles();
+        decorationTilemap.ClearAllTiles();
+        
+        foreach(var tileData in roomData.tiles)
         {
-            Vector3Int pos = roomData.positions[i];
-
-            sourceTilemap.SetTile(pos, roomData.tiles[i]);
+            switch (tileData.layer)
+            {
+                case TileLayer.Background:
+                    backgroundTilemap.SetTile(tileData.position, tileData.tile);
+                    break;
+                case TileLayer.Ground:
+                    groundTilemap.SetTile(tileData.position, tileData.tile);
+                    break;
+                case TileLayer.Decoration:
+                    decorationTilemap.SetTile(tileData.position, tileData.tile);
+                    break;
+            }
         }
     }
 }
