@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: -6926432120547162988}
   - component: {fileID: 2006092576219759501}
   - component: {fileID: 6306510222126428752}
+  - component: {fileID: 3414792289800202537}
   m_Layer: 0
   m_Name: player (real)
   m_TagString: Player
@@ -498,6 +499,7 @@ MonoBehaviour:
   gun: {fileID: 8983414702582604726}
   isDead: 0
   dieParticles: {fileID: 0}
+  animator: {fileID: 0}
   speed: 25
   topSpeed: 75
   offset: {x: 0, y: 0, z: 0}
@@ -5487,6 +5489,28 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!95 &3414792289800202537
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7861661401669436755}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a2723b75c2972fd46ace480dd607b8c1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8056494417862028590
 GameObject:
   m_ObjectHideFlags: 0
