@@ -16,8 +16,8 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool isDead = false;
 
     [SerializeField] private ParticleSystem dieParticles;
-    
-  
+
+    [SerializeField] private Animator animator;
 
     public float speed = 1f;
     public float topSpeed = 10f;
@@ -185,6 +185,8 @@ public class PlayerMovement : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
             movementInput = context.ReadValue<Vector2>();
+               animator.SetFloat("HorizontalSpeed", movementInput.x);
+                animator.SetFloat("VerticalSpeed", movementInput.y);
     }
     IEnumerator GunCooldown()
     {
