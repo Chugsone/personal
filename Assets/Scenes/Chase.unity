@@ -279,17 +279,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4695628315788831691, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
   m_PrefabInstance: {fileID: 165712329}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &165712333 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6852443743818987858, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
-  m_PrefabInstance: {fileID: 165712329}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e98714710d015f41acea626213ea629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &176666523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,7 +1077,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!114 &6037938801266761860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1104,7 +1093,7 @@ MonoBehaviour:
   patrolPoints:
   - {fileID: 231294046}
   - {fileID: 1920383814}
-  moveSpeed: 26.77
+  moveSpeed: 3
   patrolDestination: 0
   playerTransform: {fileID: 165712332}
   isChasing: 0
@@ -1122,7 +1111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 11
-  playerHealth: {fileID: 165712333}
   playerMovement: {fileID: 165712331}
 --- !u!61 &6743846294491447563
 BoxCollider2D:
