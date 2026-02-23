@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -15,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool isDead = false;
 
     [SerializeField] private ParticleSystem dieParticles;
-
+    
   
 
     public float speed = 1f;
@@ -86,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         {
             dashTimer -= Time.deltaTime;
         }
-     
+        
 
     }
     void FixedUpdate()
@@ -162,6 +163,9 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
+
+   
+
     public void Shoot(InputAction.CallbackContext context)
     {
        
@@ -180,7 +184,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        movementInput = context.ReadValue<Vector2>();
+            movementInput = context.ReadValue<Vector2>();
     }
     IEnumerator GunCooldown()
     {
