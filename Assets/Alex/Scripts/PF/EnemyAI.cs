@@ -7,7 +7,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float maxOffset = 2f;
 
-
+    private Vector3 direction;
     private Rigidbody2D rb2d;
     private static Transform player;
     private List<Vector3> path;
@@ -29,37 +29,15 @@ public class EnemyAI : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (path == null || pathIndex >= path.Count)
-        {
-            Debug.Log($"Path: {path}");
+        HandlePath();
+         rb2d.linearVelocity = speed * direction;
 
-            NewPath();
-        }
+        Push();
 
-        
-        if (path != null)
-        {
-            if (Vector3.Distance(player.position, path[^1]) > maxOffset)
-            {
-                NewPath();
-            }
-        }
+    }
 
-        if (path != null && pathIndex < path.Count)
-        {
-            
-            Debug.Log("test32");
-            Vector2 direction = path[pathIndex] - transform.position;
-            direction = direction.normalized;
-            rb2d.linearVelocity = speed * direction;
-
-            if (Vector3.Distance(transform.position, path[pathIndex]) < 0.1f)
-            {
-                pathIndex++;
-            }
-
-        }
-
+    private void Push()
+    {
         Collider2D[] nearby = Physics2D.OverlapCircleAll(transform.position, 0.5f);
         foreach(var col in nearby)
         {
@@ -69,6 +47,34 @@ public class EnemyAI : MonoBehaviour
                 rb2d.linearVelocity += offset.normalized * 0.5f;
             }
         }
+    }
+
+    private void HandlePath()
+    {
+        Debug.Log($"Path: {path}");
+        if (path == null || pathIndex >= path.Count)
+        {
+            NewPath();
+            return;
+        }
+
+
+         if (Vector3.Distance(player.position, path[^1]) > maxOffset)
+         {
+            NewPath();
+            return;
+         }
+        
+
+        
+         direction = path[pathIndex] - transform.position;
+         direction = direction.normalized;
+
+         if (Vector3.Distance(transform.position, path[pathIndex]) < 0.1f)
+         {
+             pathIndex++;
+         }
+
     }
 
     private void NewPath()
