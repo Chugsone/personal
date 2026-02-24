@@ -17,7 +17,7 @@ public class Stats : MonoBehaviour
     [HideInInspector]
     public int Health
     {
-        get { return _health; }
+        get { return _health; } 
         set
         {
             
@@ -48,6 +48,7 @@ public class Stats : MonoBehaviour
                         Debug.LogWarning("Player Stats script not found.");
                     }
                     _playerStats.Experience += _exp;
+
                 }
                 else if (gameObject.CompareTag("Player"))
                 {

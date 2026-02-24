@@ -25,6 +25,8 @@ public class WFCGen : MonoBehaviour
     private Dictionary<Vector2Int, RoomData> grid = new();
     private List<Vector2Int> frontier = new();
 
+    public GameObject latestRoom;
+
     public static WFCGen Instance {get; private set; }
 
     private void Awake()
@@ -109,7 +111,9 @@ public class WFCGen : MonoBehaviour
         pathfinder.groundTilemap = groundTilemap;
         BoundsInt roomBounds = new BoundsInt(new Vector3Int(worldPos.x - room.size.x / 2, worldPos.y - room.size.y / 2, 0), new Vector3Int(room.size.x, room.size.y, 1));
         pathfinder.BuildGrid(roomBounds);
-        
+        latestRoom = roomGO;
+
+
         Debug.Log("World: " + worldPos + " -> Cell: " + groundTilemap.WorldToCell(worldPos));
 
        
