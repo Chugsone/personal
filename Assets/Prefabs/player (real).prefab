@@ -511,7 +511,7 @@ MonoBehaviour:
   gun: {fileID: 8983414702582604726}
   isDead: 0
   dieParticles: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 3414792289800202537}
   speed: 25
   topSpeed: 75
   offset: {x: 0, y: 0, z: 0}
@@ -5593,7 +5593,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.67
+  orthographic size: 3.91
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
