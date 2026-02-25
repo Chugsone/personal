@@ -38,11 +38,13 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource source;
     public AudioClip ShootFX;
   
-    [SerializeField] public float reloadTimer = 0.5f;
+    [SerializeField] public float recoil = 0.5f;
 
     [SerializeField] private GameObject spawn;
 
     public bool reloaded = true;
+   [SerializeField] private float ReloadTime;
+    [SerializeField] private int mag;
 
     public float KBForce;
     public float KBCounter;
@@ -55,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     private float dashTimer = 0f;
     [SerializeField] private float dashCooldown = .25f;
 
-
+    [SerializeField] private int bullets = 8;
 
     private void Awake()
     {
@@ -169,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
     public void Shoot(InputAction.CallbackContext context)
     {
        
-        if (context.performed && reloaded)
+        if (context.performed && reloaded && bullets > 0)
         {
             AudioSource.PlayClipAtPoint(ShootFX, Vector2.zero);
             GameObject proj = Instantiate(projectilePrefab, spawn.transform.position, Quaternion.identity);
@@ -178,8 +180,20 @@ public class PlayerMovement : MonoBehaviour
             proj.transform.right = gun.transform.right;
             reloaded = false;
             StartCoroutine(GunCooldown());
+            bullets -= 1;
             
         }
+    }
+
+    public void Reload(InputAction.CallbackContext context)
+    {
+        StartCoroutine(ReloadTimer());
+    }
+
+    IEnumerator ReloadTimer()
+    {
+        yield return new WaitForSeconds(ReloadTime);
+        bullets = mag;
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -190,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator GunCooldown()
     {
-        yield return new WaitForSeconds(reloadTimer);
+        yield return new WaitForSeconds(recoil);
         
         reloaded = true;
     }
