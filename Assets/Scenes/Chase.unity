@@ -798,6 +798,7 @@ MonoBehaviour:
   backgroundTilemap: {fileID: 1386376013}
   groundTilemap: {fileID: 188109655}
   decorationTilemap: {fileID: 1805653156}
+  latestRoom: {fileID: 0}
 --- !u!4 &591818021
 Transform:
   m_ObjectHideFlags: 0

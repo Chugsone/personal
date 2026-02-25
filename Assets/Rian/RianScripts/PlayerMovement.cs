@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public float recoil = 0.5f;
 
     [SerializeField] private GameObject spawn;
+    public bool FullAuto = false;
 
     public bool reloaded = true;
    [SerializeField] private float ReloadTime;
@@ -89,8 +90,12 @@ public class PlayerMovement : MonoBehaviour
         {
             dashTimer -= Time.deltaTime;
         }
-        
 
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            recoil = 0;
+            mag = 100;
+        }
     }
     void FixedUpdate()
     {
@@ -143,7 +148,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
  
-
     private void AimGamepad(InputAction.CallbackContext context)
     {
         if (context.ReadValue<Vector2>() != Vector2.zero)
@@ -195,6 +199,8 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(ReloadTime);
         bullets = mag;
     }
+
+    
 
     public void Move(InputAction.CallbackContext context)
     {
