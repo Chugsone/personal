@@ -195,8 +195,16 @@ PrefabInstance:
       value: player
       objectReference: {fileID: 0}
     - target: {fileID: 8483400121755777894, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: bullets
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8483400121755777894, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
       propertyPath: dashPower
       value: 367
+      objectReference: {fileID: 0}
+    - target: {fileID: 8483400121755777894, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: ReloadTime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8483400121755777894, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
       propertyPath: dashCooldown
