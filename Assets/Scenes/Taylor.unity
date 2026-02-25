@@ -5652,15 +5652,18 @@ MonoBehaviour:
   playerMovement: {fileID: 8483400121608559480}
   source: {fileID: 7791142584819535126}
   ShootFX: {fileID: 8300000, guid: 60cd4c1da6b3c534fa43e7e8012b5b25, type: 3}
-  reloadTimer: 0.5
+  recoil: 0.5
   spawn: {fileID: 2441740926733606720}
   reloaded: 1
+  ReloadTime: 0
+  mag: 0
   KBForce: 0
   KBCounter: 0
   KBTotalTime: 0
   knockFromRight: 0
   dashPower: 0
   dashCooldown: 0.25
+  bullets: 8
 --- !u!114 &8639026258358959834
 MonoBehaviour:
   m_ObjectHideFlags: 0
