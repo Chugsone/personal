@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool reloaded = true;
    [SerializeField] private float ReloadTime;
-    [SerializeField] private int mag;
+   public int mag;
 
     public float KBForce;
     public float KBCounter;
@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     private float dashTimer = 0f;
     [SerializeField] private float dashCooldown = .25f;
 
-    [SerializeField] private int bullets = 8;
+    public int bullets = 8;
 
     private void Awake()
     {
@@ -138,6 +138,16 @@ public class PlayerMovement : MonoBehaviour
             AimMouse(context);
         else if (context.control.device is Gamepad)
             AimGamepad(context);
+
+        //makes the gun flip upside down when aiming left
+        if (gun.transform.right.x < 0)
+        {
+            gun.transform.localScale = new Vector3(1, -1, 1);
+        }
+        else
+        {
+            gun.transform.localScale = new Vector3(1, 1, 1);
+        }
     }
 
 
@@ -206,7 +216,7 @@ public class PlayerMovement : MonoBehaviour
     {
             movementInput = context.ReadValue<Vector2>();
                animator.SetFloat("HorizontalSpeed", movementInput.x);
-                animator.SetFloat("VerticalSpeed", movementInput.y);
+               animator.SetFloat("VerticalSpeed", movementInput.y);
     }
     IEnumerator GunCooldown()
     {
