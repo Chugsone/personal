@@ -153,8 +153,8 @@ Transform:
   m_GameObject: {fileID: 6859759018314393277}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.86, y: -0.075, z: -0.1}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalPosition: {x: 0.853, y: -0.526, z: -0.1}
+  m_LocalScale: {x: 1.0583751, y: 1.0661421, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2995774390860005175}
@@ -204,7 +204,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6811889114456888121, guid: dbcf77caa2b47804f8a2c5b34d6384a2, type: 3}
+  m_Sprite: {fileID: 7461786747489331193, guid: 54555435089935a4d99b43e2de02579c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -559,6 +559,7 @@ MonoBehaviour:
   gun: {fileID: 8983414702582604726}
   dieParticles: {fileID: 0}
   animator: {fileID: 3414792289800202537}
+  gunAnimator: {fileID: 0}
   spawn: {fileID: 2441740926478237534}
   ReloadTime: 0
   dashCooldown: 1
