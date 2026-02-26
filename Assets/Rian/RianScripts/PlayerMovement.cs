@@ -19,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float ReloadTime;
     [SerializeField] private float dashCooldown = .25f;
 
+    public TrailRenderer trailRenderer;
+    public float trailTime;
+
     [HideInInspector] public bool isDead = false;
     
     private Vector2 movementInput;
@@ -58,6 +61,8 @@ public class PlayerMovement : MonoBehaviour
     {
         dashTimer = dashCooldown;
         playerMovement = GetComponent<PlayerMovement>();
+        trailRenderer = GetComponent<TrailRenderer>();
+        trailRenderer.emitting = false;
     }
 
     void Start()
@@ -161,6 +166,13 @@ public class PlayerMovement : MonoBehaviour
         }
         dashTimer = dashCooldown;
         rb.linearVelocity = movementInput * dashPower;
+        StartCoroutine(playTrail());
+    }
+    IEnumerator playTrail()
+    {
+        trailRenderer.emitting = true;
+        yield return new WaitForSeconds(trailTime);
+        trailRenderer.emitting = false;
     }
 
     public void Shoot(InputAction.CallbackContext context)
