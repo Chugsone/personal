@@ -22,7 +22,7 @@ public class Stats : MonoBehaviour
         {
             
 
-            if (value < _health) //Removing Health
+            if (value < _health) //Removing Health ... .GetComponent<Stats>().Health -= damage;
             {
                 if (damageParticles != null)
                 {
@@ -137,5 +137,7 @@ public class Stats : MonoBehaviour
             _playerStats = this;
         }
     }
+
+
 
 }
