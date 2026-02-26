@@ -89,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
         {
             recoil = 0;
             mag = 100;
+            Debug.Log("full auto");
         }
 
       
