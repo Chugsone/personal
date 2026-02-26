@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject gun;
     [SerializeField] private ParticleSystem dieParticles;
     [SerializeField] private Animator animator;
+    [SerializeField] private Animator gunAnimator;
     [SerializeField] private GameObject spawn;
     [SerializeField] private float ReloadTime;
     [SerializeField] private float dashCooldown = .25f;
@@ -169,12 +170,14 @@ public class PlayerMovement : MonoBehaviour
         {
             AudioSource.PlayClipAtPoint(ShootFX, Vector2.zero);
             GameObject proj = Instantiate(projectilePrefab, spawn.transform.position, Quaternion.identity);
-            proj.GetComponent<SpriteRenderer>().color = playerColor;
+            
 
             proj.transform.right = gun.transform.right;
             reloaded = false;
             StartCoroutine(GunCooldown());
             bullets -= 1;
+
+            gunAnimator.SetTrigger("Shoot");
         }
     }
 
