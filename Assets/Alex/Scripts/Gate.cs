@@ -2,16 +2,18 @@ using UnityEngine;
 
 public class Gate : MonoBehaviour
 {
-    public enum ExitDirections
-    {
-        Left = 0,
-        Right = 1,
-        Up = 2,
-        Down = 3,
-    }
+   
+    [HideInInspector] public WFCGen.ExitDirections ExitDirection;
+    [HideInInspector] public Vector2Int roomPos;
+    private static Gate latestGate;
 
-    public ExitDirections exitDirection;
-    private Vector2Int roomPos;
+    private void Start()
+    {
+        if (latestGate == null)
+        {
+            latestGate = this;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -20,19 +22,37 @@ public class Gate : MonoBehaviour
             return;
         }
 
-        roomPos += DirectionToVector(exitDirection);
+        Vector2Int neighborPos = roomPos + DirectionToVector(ExitDirection);
 
+        Debug.Log($"Neighbor Room Pos: {neighborPos}");
+
+        if (WFCGen.Instance.InGrid(neighborPos)) //Checks if Neighbor room has been generated.
+        {
+            Debug.Log("test1");
+            if (latestGate.roomPos != roomPos) //This means that the player entered a different room
+            {
+            Debug.Log("test2");
+
+            }
+        }
+        else //Neighbor room has not been generated yet
+        {
+            Debug.Log("test3");
+
+        }
+
+        latestGate = this;
         
     }
 
-    private Vector2Int DirectionToVector(ExitDirections directions)
+    private Vector2Int DirectionToVector(WFCGen.ExitDirections directions)
     {
         return directions switch
         {
-            ExitDirections.Left => new Vector2Int(-1, 0),
-            ExitDirections.Right => new Vector2Int(1, 0),
-            ExitDirections.Up => new Vector2Int(0, 1),
-            ExitDirections.Down => new Vector2Int(0, -1),
+            WFCGen.ExitDirections.Left => new Vector2Int(-1, 0),
+            WFCGen.ExitDirections.Right => new Vector2Int(1, 0),
+            WFCGen.ExitDirections.Up => new Vector2Int(0, 1),
+            WFCGen.ExitDirections.Down => new Vector2Int(0, -1),
             _ => Vector2Int.zero
         };
     }
