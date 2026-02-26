@@ -8,24 +8,31 @@ using JetBrains.Annotations;
 
 
 public class PlayerMovement : MonoBehaviour
-
 {
-    [SerializeField] public Rigidbody2D rb;
-    
+    [SerializeField] public float recoil = 0.5f; 
+    [SerializeField] public Rigidbody2D rb; 
     [SerializeField] private GameObject gun;
-    [HideInInspector] public bool isDead = false;
-
     [SerializeField] private ParticleSystem dieParticles;
-
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject spawn;
+    [SerializeField] private float ReloadTime;
+    [SerializeField] private float dashCooldown = .25f;
+
+    [HideInInspector] public bool isDead = false;
+    
+    private Vector2 movementInput;
+    public Vector2 boxsize;
+    private Vector2 input;
+    public Vector3 offset;
 
     public float speed = 1f;
-    public float topSpeed = 10f;
-    public Vector3 offset;
-    public Vector2 boxsize;
+    public float topSpeed = 10f;   
     public float castDistance;
-    private Vector2 movementInput;
-   
+    
+    public float KBForce;
+    public float KBCounter;
+    public float KBTotalTime;
+
     public GameObject projectilePrefab;
     public Camera mainCamera;
     public int health = 0;
@@ -33,50 +40,30 @@ public class PlayerMovement : MonoBehaviour
     public float direction;
     public PlayerMovement playerMovement;
 
-    private Vector2 input;
-
     public AudioSource source;
     public AudioClip ShootFX;
   
-    [SerializeField] public float recoil = 0.5f;
-
-    [SerializeField] private GameObject spawn;
     public bool FullAuto = false;
-
     public bool reloaded = true;
-   [SerializeField] private float ReloadTime;
-   public int mag;
-
-    public float KBForce;
-    public float KBCounter;
-    public float KBTotalTime;
+    public int mag;
+    public int bullets = 8;
 
     public bool knockFromRight;
 
     public float dashPower = 3.67f;
-
     private float dashTimer = 0f;
-    [SerializeField] private float dashCooldown = .25f;
-
-    public int bullets = 8;
-
+   
     private void Awake()
     {
         dashTimer = dashCooldown;
         playerMovement = GetComponent<PlayerMovement>();
     }
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerColor = GetComponent<SpriteRenderer>().color;
         rb = GetComponent<Rigidbody2D>();
     }
-
-   
-    // Update is called once per frame
-  
 
     private void OnDrawGizmos()
     {
@@ -97,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
             mag = 100;
         }
     }
+
     void FixedUpdate()
     {
         //rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, (movementInput.x * speed), weight);
@@ -127,9 +115,6 @@ public class PlayerMovement : MonoBehaviour
             ParticleSystem newParticle = Instantiate(dieParticles, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
-
-
-
     }
 
     public void Aim(InputAction.CallbackContext context)
@@ -175,12 +160,7 @@ public class PlayerMovement : MonoBehaviour
         }
         dashTimer = dashCooldown;
         rb.linearVelocity = movementInput * dashPower;
-       
-
-
     }
-
-   
 
     public void Shoot(InputAction.CallbackContext context)
     {
@@ -195,7 +175,6 @@ public class PlayerMovement : MonoBehaviour
             reloaded = false;
             StartCoroutine(GunCooldown());
             bullets -= 1;
-            
         }
     }
 
@@ -210,14 +189,13 @@ public class PlayerMovement : MonoBehaviour
         bullets = mag;
     }
 
-    
-
     public void Move(InputAction.CallbackContext context)
     {
             movementInput = context.ReadValue<Vector2>();
                animator.SetFloat("HorizontalSpeed", movementInput.x);
                animator.SetFloat("VerticalSpeed", movementInput.y);
     }
+
     IEnumerator GunCooldown()
     {
         yield return new WaitForSeconds(recoil);
@@ -229,9 +207,4 @@ public class PlayerMovement : MonoBehaviour
        //adds one knockback to the player in the inspector
        
     }
-
-
-
-   
 }
-

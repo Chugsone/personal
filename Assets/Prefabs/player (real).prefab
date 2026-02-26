@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2441740926478237534}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.458, y: -0, z: 0}
+  m_LocalPosition: {x: 0.28, y: 0.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -152,7 +152,7 @@ Transform:
   m_GameObject: {fileID: 6859759018314393277}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.397, y: 0.093, z: -0.0032858942}
+  m_LocalPosition: {x: 0.86, y: -0.075, z: -0.1}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -531,16 +531,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b10e3c5a9e7aa4a87ce06c2275f92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  recoil: 0.5
   rb: {fileID: 2666180362488847921}
   gun: {fileID: 8983414702582604726}
-  isDead: 0
   dieParticles: {fileID: 0}
   animator: {fileID: 3414792289800202537}
+  spawn: {fileID: 2441740926478237534}
+  ReloadTime: 0
+  dashCooldown: 1
+  isDead: 0
+  boxsize: {x: 0, y: 0}
+  offset: {x: 0, y: 0, z: 0}
   speed: 25
   topSpeed: 75
-  offset: {x: 0, y: 0, z: 0}
-  boxsize: {x: 0, y: 0}
   castDistance: 0
+  KBForce: 0
+  KBCounter: 0
+  KBTotalTime: 0
   projectilePrefab: {fileID: 1370411557751180021, guid: b0a9f9c834b99004cb5015548c2c2479, type: 3}
   mainCamera: {fileID: 0}
   health: 0
@@ -548,19 +555,12 @@ MonoBehaviour:
   playerMovement: {fileID: 8483400121755777894}
   source: {fileID: 7791142584603094280}
   ShootFX: {fileID: 8300000, guid: 60cd4c1da6b3c534fa43e7e8012b5b25, type: 3}
-  recoil: 0.5
-  spawn: {fileID: 2441740926478237534}
   FullAuto: 0
   reloaded: 1
-  ReloadTime: 0
   mag: 8
-  KBForce: 0
-  KBCounter: 0
-  KBTotalTime: 0
+  bullets: 8
   knockFromRight: 0
   dashPower: 20
-  dashCooldown: 1
-  bullets: 8
 --- !u!114 &5777335464297106689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5746,7 +5746,7 @@ Transform:
   m_GameObject: {fileID: 8983414702582604726}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.003, y: -0.023, z: 0.0032858942}
+  m_LocalPosition: {x: 0.003, y: 0.1, z: 0.0032858942}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
