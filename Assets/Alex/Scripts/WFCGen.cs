@@ -188,6 +188,16 @@ public class WFCGen : MonoBehaviour
         return rooms[0];
     }
 
+    public bool InGrid(Vector2Int neighborGridPos)
+    {
+       if (!grid.ContainsKey(neighborGridPos))
+        {
+            return true;
+        }
+        return false;
+    }
+
+
     private Vector2Int DirectionToVector(ExitDirections directions)
     {
         return directions switch

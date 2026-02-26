@@ -415,7 +415,19 @@ MonoBehaviour:
     m_ActionId: 6c2ab1b8-8984-453a-af3d-a3c78ae1679a
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5777335464297106689}
+        m_TargetAssemblyTypeName: Interact, Assembly-CSharp
+        m_MethodName: InteractWith
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 852140f2-7766-474d-8707-702459ba45f3
     m_ActionName: 'Player/Interact[/Keyboard/e]'
   - m_PersistentCalls:
@@ -538,15 +550,16 @@ MonoBehaviour:
   ShootFX: {fileID: 8300000, guid: 60cd4c1da6b3c534fa43e7e8012b5b25, type: 3}
   recoil: 0.5
   spawn: {fileID: 2441740926478237534}
+  FullAuto: 0
   reloaded: 1
-  reloadtime: 2
+  ReloadTime: 0
   mag: 8
   KBForce: 0
   KBCounter: 0
   KBTotalTime: 0
   knockFromRight: 0
-  dashPower: 0
-  dashCooldown: 0.25
+  dashPower: 20
+  dashCooldown: 1
   bullets: 8
 --- !u!114 &5777335464297106689
 MonoBehaviour:
@@ -560,7 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 257e4f623fdfaa24aa96fb1c9a744383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxSize: {x: 4, y: 4}
+  boxSize: {x: 2.5, y: 2.5}
   boxLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -5608,7 +5621,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.67
+  orthographic size: 3.91
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1720812390680296526}
   - component: {fileID: 8983008168080909950}
   - component: {fileID: 906491295565359043}
-  - component: {fileID: -1412614480912537348}
+  - component: {fileID: -3106148996471166432}
   m_Layer: 7
   m_Name: Campfire
   m_TagString: Interactable
@@ -207,7 +207,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!61 &-1412614480912537348
+--- !u!61 &-3106148996471166432
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

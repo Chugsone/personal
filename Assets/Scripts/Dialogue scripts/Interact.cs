@@ -20,4 +20,10 @@ public class Interact : MonoBehaviour
             interactable.onInteract.Invoke();
         }
     }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(transform.position, boxSize);
+    }
 }

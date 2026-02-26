@@ -5598,11 +5598,17 @@ MonoBehaviour:
   - tile: {fileID: 11400000, guid: 6b57852cbd9c37847a0afaeffa880a09, type: 2}
     position: {x: 11, y: -8, z: 0}
     layer: 2
+  - tile: {fileID: 11400000, guid: eb0968f2ee702864bafda806da9c9e44, type: 2}
+    position: {x: -23, y: -4, z: 0}
+    layer: 2
   - tile: {fileID: 11400000, guid: d9a7cae28cf912042a94d39ee52af8ad, type: 2}
     position: {x: -12, y: -4, z: 0}
     layer: 2
   - tile: {fileID: 11400000, guid: d9a7cae28cf912042a94d39ee52af8ad, type: 2}
     position: {x: 11, y: -4, z: 0}
+    layer: 2
+  - tile: {fileID: 11400000, guid: eb0968f2ee702864bafda806da9c9e44, type: 2}
+    position: {x: 22, y: -4, z: 0}
     layer: 2
   - tile: {fileID: 11400000, guid: 6b57852cbd9c37847a0afaeffa880a09, type: 2}
     position: {x: -16, y: -3, z: 0}
