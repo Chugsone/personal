@@ -12,6 +12,10 @@ public class BulletCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ammo.SetText($"{playerMovement.bullets}|{playerMovement.mag}"); 
+        Ammo.SetText($"{playerMovement.bullets}|{playerMovement.mag}");
+        if (playerMovement.reloading)
+        {
+            Ammo.SetText("Reloading...");
+        }
     }
 }
