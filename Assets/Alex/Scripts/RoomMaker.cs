@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.Tilemaps;
 
 public class RoomMaker : MonoBehaviour
@@ -35,6 +36,8 @@ public class RoomMaker : MonoBehaviour
 
     private void CaptureFromTilemap(Tilemap tilemap, TileLayer layer)
     {
+        Profiler.BeginSample("test");
+
         if (tilemap == null)
         {
             return;
@@ -53,6 +56,8 @@ public class RoomMaker : MonoBehaviour
             TilePlacement placement = new TilePlacement {tile = tile, position = pos, layer = layer};
             roomData.tiles.Add(placement);
         }
+
+        Profiler.EndSample();
     }
 
 
