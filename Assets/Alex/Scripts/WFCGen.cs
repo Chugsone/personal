@@ -124,7 +124,7 @@ public class WFCGen : MonoBehaviour
         Pathfinder pathfinder = enemiesGO.AddComponent<Pathfinder>();
         pathfinder.groundTilemap = groundTilemap;
         BoundsInt roomBounds = new BoundsInt(new Vector3Int(worldPos.x - room.size.x / 2, worldPos.y - room.size.y / 2, 0), new Vector3Int(room.size.x, room.size.y, 1));
-        pathfinder.BuildGrid(roomBounds);
+        //pathfinder.BuildGrid(roomBounds);
         latestRoom = roomGO;
 
         CreateGates(room, worldPos, gridPos);
