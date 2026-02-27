@@ -83,6 +83,19 @@ public class EnemyAI : MonoBehaviour
         pathIndex = 0;
         rb2d.linearVelocity = Vector3.zero;
     }
-    
+
+    private void Update()
+    {
+        //flips the sprite based on the direction of movement
+        if (direction.x > 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else if (direction.x < 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+    }
+
 }
 

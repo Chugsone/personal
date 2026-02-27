@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using UnityEditor.ShaderGraph.Internal;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -40,9 +41,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject projectilePrefab;
     public Camera mainCamera;
     public int health = 0;
-    private Color playerColor;
     public float direction;
     public PlayerMovement playerMovement;
+    public bool reloading;
 
     public AudioSource source;
     public AudioClip ShootFX;
@@ -67,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        playerColor = GetComponent<SpriteRenderer>().color;
+        
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -88,7 +89,10 @@ public class PlayerMovement : MonoBehaviour
         {
             recoil = 0;
             mag = 100;
+            Debug.Log("full auto");
         }
+
+      
     }
 
     void FixedUpdate()
@@ -178,7 +182,7 @@ public class PlayerMovement : MonoBehaviour
     public void Shoot(InputAction.CallbackContext context)
     {
        
-        if (context.performed && reloaded && bullets > 0)
+        if (context.performed && reloaded && bullets > 0 && !reloading)
         {
             AudioSource.PlayClipAtPoint(ShootFX, Vector2.zero);
             GameObject proj = Instantiate(projectilePrefab, spawn.transform.position, Quaternion.identity);
@@ -195,13 +199,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void Reload(InputAction.CallbackContext context)
     {
-        StartCoroutine(ReloadTimer());
+        if (!reloading && bullets != 8)
+        {
+            StartCoroutine(ReloadTimer());
+            reloading = true;
+        }
     }
 
     IEnumerator ReloadTimer()
     {
         yield return new WaitForSeconds(ReloadTime);
         bullets = mag;
+        reloading = false;
     }
 
     public void Move(InputAction.CallbackContext context)
