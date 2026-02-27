@@ -26,6 +26,7 @@ public class WFCGen : MonoBehaviour
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private Tilemap decorationTilemap;
     private Dictionary<Vector2Int, RoomData> grid = new();
+    private HashSet<Vector2Int> spawnedRooms = new();
     private List<Vector2Int> frontier = new();
 
     public GameObject latestRoom;
@@ -64,6 +65,8 @@ public class WFCGen : MonoBehaviour
         frontier.Clear();
 
         Vector2Int startPos = Vector2Int.zero; 
+        grid[startPos] = startRoom;
+        spawnedRooms.Add(startPos);
         PlaceRoom(startRoom, startPos);
         frontier.Add(startPos);
 
@@ -90,7 +93,9 @@ public class WFCGen : MonoBehaviour
                     continue;
                 }
                 RoomData chosenRoom = ChooseWeighted(candidates, newPos, seed);
-                PlaceRoom(chosenRoom, newPos);
+                grid[newPos] = chosenRoom;
+                Debug.Log($"added {newPos} to the grid.");
+                //PlaceRoom(chosenRoom, newPos);
                 frontier.Add(newPos);
                 roomsPlaced++;
             }
@@ -98,10 +103,16 @@ public class WFCGen : MonoBehaviour
         }
     }
 
+    public void PlaceRoom(Vector2Int gridPos)
+    {
+       PlaceRoom(grid[gridPos], gridPos); 
+    }
+
+
     private void PlaceRoom(RoomData room, Vector2Int gridPos)
     {
         
-        grid[gridPos] = room;
+        //grid[gridPos] = room;
 
         Vector3Int worldPos = startOffset + new Vector3Int(gridPos.x * (room.size.x), gridPos.y * (room.size.y), 0);
         
@@ -118,7 +129,7 @@ public class WFCGen : MonoBehaviour
 
         CreateGates(room, worldPos, gridPos);
 
-        Debug.Log("World: " + worldPos + " -> Cell: " + groundTilemap.WorldToCell(worldPos));
+        //Debug.Log("World: " + worldPos + " -> Cell: " + groundTilemap.WorldToCell(worldPos));
 
        
 
@@ -243,10 +254,11 @@ public class WFCGen : MonoBehaviour
 
     public bool InGrid(Vector2Int neighborGridPos)
     {
-       if (grid.ContainsKey(neighborGridPos))
+       if (spawnedRooms.Contains(neighborGridPos))
         {
             return true;
         }
+        spawnedRooms.Add(neighborGridPos); //May want to change this but should work here
         return false;
     }
 
