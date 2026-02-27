@@ -7,7 +7,7 @@ public class EnemyDamage : MonoBehaviour
     public int damage;
     private Stats playerHealth;
     public Stats stats;
-
+  
     void Start()
     {
         if (GameObject.FindWithTag("Player").TryGetComponent<Stats>(out Stats stats))
@@ -23,5 +23,7 @@ public class EnemyDamage : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
             playerHealth.Health -= damage;
+        //adds a trigger to animator component called "hit"
+        Debug.Log("Hit player");
     }
 }
