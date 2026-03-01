@@ -19,6 +19,8 @@ public class WFCGen : MonoBehaviour
     [Tooltip("The starting room.")][SerializeField] private RoomData startRoom;
     [Tooltip("The list of all rooms")][SerializeField] private RoomData[] allRooms;
     [Tooltip("Starting Offset")][SerializeField] private Vector3Int startOffset = new Vector3Int(0, 0, 0);
+    [Tooltip("The amount of rooms till the boss room spawns")] [SerializeField] private int roomsTillBoss = 50;
+
 
     private bool geenrated;
     private GameObject gatePrefab;
@@ -28,6 +30,9 @@ public class WFCGen : MonoBehaviour
     private Dictionary<Vector2Int, RoomData> grid = new();
     private HashSet<Vector2Int> spawnedRooms = new();
     private List<Vector2Int> frontier = new();
+    private RoomData bossHall;
+    private GameObject holeGO;
+    
 
     public GameObject latestRoom;
     public int seed;
@@ -39,6 +44,9 @@ public class WFCGen : MonoBehaviour
     {
         Instance = this;
         gatePrefab = Resources.Load<GameObject>("Prefabs/Gate");
+        bossHall = Resources.Load<RoomData>("Rooms/BossHallway");
+        holeGO = Resources.Load<GameObject>("Prefabs/Hole");
+
     }
 
     void Start()
@@ -111,8 +119,7 @@ public class WFCGen : MonoBehaviour
 
     private void PlaceRoom(RoomData room, Vector2Int gridPos)
     {
-        
-        //grid[gridPos] = room;
+
 
         Vector3Int worldPos = startOffset + new Vector3Int(gridPos.x * (room.size.x), gridPos.y * (room.size.y), 0);
         
@@ -127,6 +134,12 @@ public class WFCGen : MonoBehaviour
         //pathfinder.BuildGrid(roomBounds);
         latestRoom = roomGO;
 
+        if (roomsTillBoss == 0)
+        {
+            room = bossHall;   
+            GameObject hole = Instantiate(holeGO, (Vector3) worldPos - new Vector3(0f, 5f, 0f), Quaternion.identity);
+        }
+        roomsTillBoss--;
         CreateGates(room, worldPos, gridPos);
 
         //Debug.Log("World: " + worldPos + " -> Cell: " + groundTilemap.WorldToCell(worldPos));

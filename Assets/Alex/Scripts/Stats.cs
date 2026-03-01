@@ -10,7 +10,11 @@ public class Stats : MonoBehaviour
     public int MaxHealth
     {
         get { return _maxHealth; }
-        set { _maxHealth = value; }
+        set 
+        { 
+            _health += value - _maxHealth;
+            _maxHealth = value; 
+        }
     }
 
     private int _health; 
@@ -55,6 +59,16 @@ public class Stats : MonoBehaviour
                     
                 }
             }
+        }
+    }
+
+    [Tooltip("The max speed an object can move")][SerializeField] private float _maxMoveSpeed = 75f;
+    public float MoveSpeed
+    {
+        get { return _maxMoveSpeed; }
+        set 
+        { 
+            _maxMoveSpeed = value; 
         }
     }
     
@@ -114,6 +128,18 @@ public class Stats : MonoBehaviour
         }
     }
 
+    private int _spins;
+    [HideInInspector] public int Spins
+    {
+        get { return _spins; }
+        set
+        {
+            _spins = value; //Update EXP Bar
+
+        }
+    }
+
+
         
     [Header("Particles")]
     [SerializeField] ParticleSystem healParticles;
@@ -121,12 +147,12 @@ public class Stats : MonoBehaviour
 
     private void LevelUp()
     {
+        _spins++;
         _exp -= _expReq;
         _level++;                
         _expReq = Mathf.RoundToInt(_expReq * _expMultiplier);
 
         _maxHealth = Mathf.RoundToInt(_maxHealth*1.1f);
-        _health += _maxHealth / 10;
     }
 
     void Start()
