@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Events;
+using System.Collections;
 
 public class Stats : MonoBehaviour
 {
@@ -12,8 +14,9 @@ public class Stats : MonoBehaviour
         get { return _maxHealth; }
         set 
         { 
-            _health += value - _maxHealth;
+            int oldMaxHealth = _maxHealth;
             _maxHealth = value; 
+            _health += value - oldMaxHealth;
         }
     }
 
@@ -28,11 +31,36 @@ public class Stats : MonoBehaviour
 
             if (value < _health) //Removing Health ... .GetComponent<Stats>().Health -= damage;
             {
+                if (_currentIFrames > 0)
+                {
+                    return;    
+                }
+
                 if (damageParticles != null)
                 {
                     damageParticles.Play();
                 }
-                _health = Mathf.Clamp(Mathf.RoundToInt((float)_health - (((float) _health - (float) value) * (1 - _defense))), 0, _maxHealth);
+                if (gameObject.CompareTag("Enemy") && _playerStats.Vampirism > 0f)
+                {
+                    _playerStats.Health += Mathf.RoundToInt(_playerStats.Vampirism * (_health - value));
+
+                }
+                if (gameObject.name == "Boss")
+                {
+                    float distance = Vector2.Distance(transform.position, _playerStats.gameObject.transform.position);
+                    if (distance > 10f)
+                    {
+                        _defense = Mathf.Clamp((distance - 10f) / 10f, 0f, 0.5f);
+                    }
+                    Debug.Log($"Distance: {distance} --- DMG Mit {Mathf.RoundToInt(_defense * 100f)}%");
+                    _health = Mathf.Clamp(Mathf.RoundToInt((float)_health - (((float) _health - (float) value) * (1 - _defense))), 0, _maxHealth);
+                    gameObject.GetComponent<BossScript>().Health = _health;
+                    _defense = 0f;
+                }
+                else
+                {
+                    _health = Mathf.Clamp(Mathf.RoundToInt((float)_health - (((float) _health - (float) value) * (1 - _defense))), 0, _maxHealth);
+                }
             }
             else //Adding Health
             {
@@ -62,13 +90,17 @@ public class Stats : MonoBehaviour
         }
     }
 
-    [Tooltip("The max speed an object can move")][SerializeField] private float _maxMoveSpeed = 75f;
+    [Tooltip("The speed an object can move")][SerializeField] private float _moveSpeed = 25f;
     public float MoveSpeed
     {
-        get { return _maxMoveSpeed; }
+        get { return _moveSpeed; }
         set 
         { 
-            _maxMoveSpeed = value; 
+            if (gameObject.CompareTag("Player"))
+            {
+                gameObject.GetComponent<PlayerMovement>().speed = value;
+            }
+            _moveSpeed = value; 
         }
     }
     
@@ -134,11 +166,82 @@ public class Stats : MonoBehaviour
         get { return _spins; }
         set
         {
-            _spins = value; //Update EXP Bar
+            _spins = value; 
+        }
+    }
+
+    private int _bulletHits = 1; //How many hits a bullet can do before it breaks
+    [HideInInspector] public int BulletHits
+    {
+        get { return _bulletHits; }
+        set
+        {
+            _bulletHits = value; 
 
         }
     }
 
+    private int _multifire = 0; //How many shots you fire at once
+    [HideInInspector] public int Multifire
+    {
+        get { return _multifire; }
+        set
+        {
+            _multifire = value; 
+
+        }
+    }
+
+    [SerializeField] private int _magazine = 8; 
+    [HideInInspector] public int Magazine
+    {
+        get { return _magazine; }
+        set
+        {
+            _magazine = value; 
+            if (gameObject.CompareTag("Player"))
+            {
+                gameObject.GetComponent<PlayerMovement>().mag = value;
+            }
+
+        }
+    }
+
+    private float _dashIFrames = 0; 
+    [HideInInspector] public float DashIFrames
+    {
+        get { return _dashIFrames; }
+        set
+        {
+            _dashIFrames = value; 
+
+        }
+    }
+
+    private float _currentIFrames = 0; 
+    [HideInInspector] public float CurrentIFrames
+    {
+        get {return _currentIFrames;}
+        set
+        {
+            _currentIFrames = value;
+            StartCoroutine(UpdateIFrames());
+        }
+    }
+
+    private float _vampirism = 0; 
+    [HideInInspector] public float Vampirism
+    {
+        get {return _vampirism;}
+        set
+        {
+            _vampirism = value;
+        }
+    }
+
+
+    [Header("Unity Events")]
+    public UnityEvent levelUp;
 
         
     [Header("Particles")]
@@ -151,9 +254,20 @@ public class Stats : MonoBehaviour
         _exp -= _expReq;
         _level++;                
         _expReq = Mathf.RoundToInt(_expReq * _expMultiplier);
-
-        _maxHealth = Mathf.RoundToInt(_maxHealth*1.1f);
+        levelUp.Invoke();
+        MaxHealth = Mathf.RoundToInt(_maxHealth*1.1f);
     }
+
+    
+    IEnumerator UpdateIFrames()
+    {
+        while (_currentIFrames > 0)
+        {
+            _currentIFrames -= Time.deltaTime;
+            yield return null;
+        }
+    }
+    
 
     void Start()
     {

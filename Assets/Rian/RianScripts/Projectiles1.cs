@@ -13,6 +13,8 @@ public class Projectiles1 : MonoBehaviour
     public float speed;
     public float lifetime;
     public float knockbackTime;
+    [HideInInspector] public int Damage = 1;
+    [HideInInspector] public int pierceCount = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,11 +40,11 @@ public class Projectiles1 : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Ground"))
         {
-
-            Destroy(gameObject);
+            pierceCount = 0;
         }
         else if (collision.gameObject.CompareTag("Destructible"))
         {
+            pierceCount--;
             if (collision.gameObject.TryGetComponent<Destructible>(out Destructible des))
             {
                 des.Destruct();
@@ -50,12 +52,28 @@ public class Projectiles1 : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Player"))
         {
-            
+            pierceCount--;
+        }
+        else if (collision.gameObject.CompareTag("Enemy"))
+        {
+            pierceCount--;
+            if (collision.gameObject.TryGetComponent<Stats>(out Stats enemyStats))
+            {
+                enemyStats.Health -= Damage;
+                Debug.Log("HIT");
+            }
+            else
+            {
+                Debug.LogError("Enemy has no stats script");
+            }
         }
 
 
-
-}
+        if (pierceCount <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }
 
    

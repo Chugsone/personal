@@ -102,7 +102,6 @@ public class WFCGen : MonoBehaviour
                 }
                 RoomData chosenRoom = ChooseWeighted(candidates, newPos, seed);
                 grid[newPos] = chosenRoom;
-                Debug.Log($"added {newPos} to the grid.");
                 //PlaceRoom(chosenRoom, newPos);
                 frontier.Add(newPos);
                 roomsPlaced++;
@@ -243,7 +242,6 @@ public class WFCGen : MonoBehaviour
     private RoomData ChooseWeighted(List<RoomData> rooms, Vector2Int pos, int? seed)
     {
         string calcSeed = (seed ?? this.seed) + "" + (pos.x + 100) + "" + (pos.y + 100);
-        Debug.Log(calcSeed);
         System.Random r = new(int.Parse(calcSeed));
 
         int totalWeight = 0;

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+ 
 public class SlotMachine : MonoBehaviour
 {
     private enum StatUpgrades
@@ -11,8 +13,21 @@ public class SlotMachine : MonoBehaviour
         Damage = 1,
         Movement = 2,
         Defense = 3,
-
     }
+
+    private enum CommonAbilityUpgrades
+    {
+        Pierce = 0,
+        BulletCount = 1,
+    }
+
+    private enum RareAbilityUpgrades
+    {
+        DashFrames = 0,
+        Vampirism = 1,
+        Multifire = 2,
+    }
+
     [SerializeField] private Animator anim;
     [SerializeField] private int commonStat = 15;
     [SerializeField] private int commonAbility = 15;
@@ -25,12 +40,14 @@ public class SlotMachine : MonoBehaviour
     [SerializeField] private float defenseBonus = 0.05f;
 
     [SerializeField] private GameObject pivot;
+    [SerializeField] private GameObject openSlots;
+    [SerializeField] private TMPro.TMP_Text upgradeText;
 
 
     private int spinIndex = 0;
     private bool busy;
     private bool spawned;
-    private Queue<Sprite> upgradeList = new();
+    private Queue<Sprite> upgradeList = new ();
     private float animatorSpeed = 1f;
     private bool spinning;
     private Sprite rASprite; //I am now realizing I should have made this a list but im quite lazy
@@ -42,7 +59,8 @@ public class SlotMachine : MonoBehaviour
     private RuntimeAnimatorController cACon;
     private RuntimeAnimatorController cSCon;
     private GameObject itemAnim;
-    
+    [HideInInspector] public bool MenuToggled;
+    private bool skipItemAnim = false;
 
     private GameObject item;
     private Stats playerStats;
@@ -50,10 +68,12 @@ public class SlotMachine : MonoBehaviour
     private List<Sprite> upgradeOptions = new();
     private List<GameObject> upgradeGO = new();
 
+    public static SlotMachine Instance {get; private set; }
 
 
-    void Start()
+    private void LoadOnStart()
     {
+        Instance = this;
         animatorSpeed = anim.speed;
         rASprite = Resources.Load<Sprite>("Sprites/rareAbility");
         rSSprite = Resources.Load<Sprite>("Sprites/rareStat");
@@ -83,7 +103,54 @@ public class SlotMachine : MonoBehaviour
 
     public void ToggleMenu()
     {
+        upgradeText.gameObject.SetActive(false);
+        if (Instance == null)
+        {
+            LoadOnStart();
+        }
+
+
+        player.GetComponent<PlayerInput>().enabled = MenuToggled;
+        MenuToggled = !MenuToggled;
         
+        openSlots.SetActive(!MenuToggled && playerStats.Spins != 0);
+
+
+        if (!MenuToggled && busy)
+        {
+            busy = false; 
+            if (spawned)
+            {
+                skipItemAnim = true;
+                Upgrade(Random.Range(0, 3));
+
+            }
+            else
+            {
+                Sprite upgradeSprite = rASprite;
+                switch (Random.Range(0, 4))
+                {
+                    case 0:
+                        upgradeSprite = cSSprite;
+                        break;
+                    
+                    case 1:
+                        upgradeSprite = cASprite;
+                        break;
+                    
+                    case 2:
+                        upgradeSprite = rSSprite;
+                        break;
+                    
+                }
+                UpgradeHelper(upgradeSprite);
+                Debug.Log(upgradeSprite.name);
+            }
+            anim.speed = 0f;
+
+        }
+
+        gameObject.SetActive(MenuToggled);
     }
 
     public void SpinSlots()
@@ -92,6 +159,7 @@ public class SlotMachine : MonoBehaviour
         {
             return;
         }
+        upgradeText.gameObject.SetActive(false);
         playerStats.Spins -= 1;
         busy = true;
         anim.speed = 1f;
@@ -109,8 +177,10 @@ public class SlotMachine : MonoBehaviour
             spinIndex++;
             if (spinIndex >= 3)
             {
+                spinIndex = 0;
                 anim.SetTrigger("Finish");
                 Finish();
+
                 
             }
         }
@@ -122,53 +192,109 @@ public class SlotMachine : MonoBehaviour
         {
             return;
         }
+        GameObject dontDestroy = upgradeGO[index];
         spawned = false;
-        if (upgradeOptions[index] == cSSprite || upgradeOptions[index] == rSSprite) ///Common & Rare Stat
-        {
-            System.Array enumValues = System.Enum.GetValues(typeof(StatUpgrades));
-            switch (Random.Range(0, (int) enumValues.GetValue(enumValues.Length - 1)))
-            {
-                case (int) StatUpgrades.Health:
-                    playerStats.MaxHealth = (int) ((float)playerStats.MaxHealth * (upgradeOptions[index] == cSSprite ? healthBonus : (healthBonus - 1f) * 3f + 1f));
-                    break;
-
-                case (int) StatUpgrades.Damage:
-                    playerStats.Damage = (int) ((float)playerStats.Damage * (upgradeOptions[index] == cSSprite ? damageBonus : (damageBonus - 1f) * 3f + 1f));
-                    break;
-
-                case (int) StatUpgrades.Movement:
-                    playerStats.MoveSpeed *= upgradeOptions[index] == cSSprite ? movementBonus : (movementBonus - 1f) * 3f + 1f;
-                    break;
-
-                case (int) StatUpgrades.Defense:
-                    playerStats.Defense *= upgradeOptions[index] == cSSprite ? defenseBonus : defenseBonus * 3f;
-                    break;
-            }
-        }
-        else if (upgradeOptions[index] == cASprite) //Common Ability
-        {
-            
-        }
-        else if (upgradeOptions[index] == rASprite) // Rare Ability
-        {
-            
-        }
         
+        UpgradeHelper(upgradeOptions[index]);
+
+        if (!skipItemAnim)
+        {
+            StartCoroutine(UpgradeAnim(upgradeGO[index], index));
+        }
         else
         {
-            Debug.LogError("SLOT MACHINE BROKE !?!??!?!?!??!>? Triojkdfngkn sdg do[jknhokmes pkl gio[dfio[gjksdo[jkngijkmo]]]]");
+            skipItemAnim = false;
+            Destroy(dontDestroy);
+            busy = false;
+            upgradeOptions.Clear();
+
+
         }
-        StartCoroutine(UpgradeAnim(upgradeGO[index], index));
 
         foreach (GameObject itemGO in upgradeGO)
         {
-            if (itemGO == upgradeGO[index])
+            if (itemGO == dontDestroy)
             {
                 continue;
             }
             Destroy(itemGO);
         }
         upgradeGO.Clear();
+    }
+
+    private void UpgradeHelper(Sprite upgrade)
+    {
+        if (upgrade == cSSprite || upgrade == rSSprite) ///Common & Rare Stat
+        {
+            System.Array enumValues = System.Enum.GetValues(typeof(StatUpgrades));
+            int randomNumber = Random.Range(0, 1 + (int) enumValues.GetValue(enumValues.Length - 1));
+            switch (randomNumber)
+            {
+                case (int) StatUpgrades.Health:
+                    playerStats.MaxHealth = (int) ((float)playerStats.MaxHealth * (upgrade == cSSprite ? healthBonus : (healthBonus - 1f) * 3f + 1f));
+                    upgradeText.SetText(upgrade == cSSprite ? "Minor Health Upgrde" : "Major Health Upgrade");
+                    break;
+
+                case (int) StatUpgrades.Damage:
+                    playerStats.Damage = (int) ((float)playerStats.Damage * (upgrade == cSSprite ? damageBonus : (damageBonus - 1f) * 3f + 1f));
+                    upgradeText.SetText(upgrade == cSSprite ? "Minor Damage Upgrde" : "Major Damage Upgrade");
+
+                    break;
+
+                case (int) StatUpgrades.Movement:
+                    playerStats.MoveSpeed *= upgrade == cSSprite ? movementBonus : (movementBonus - 1f) * 3f + 1f;
+                    upgradeText.SetText(upgrade == cSSprite ? "Minor Movement Upgrade" : "Major Movement Upgrade");
+
+                    break;
+
+                case (int) StatUpgrades.Defense:
+                    playerStats.Defense += upgrade == cSSprite ? defenseBonus : defenseBonus * 3f;
+                    upgradeText.SetText(upgrade == cSSprite ? "Minor Defense Upgrade" : "Major Defense Upgrade");
+
+                    break;
+            }
+        }
+        else if (upgrade == cASprite) //Common Ability
+        {
+            System.Array enumValues = System.Enum.GetValues(typeof(CommonAbilityUpgrades));
+            int randomNumber = 1 + (int) enumValues.GetValue(enumValues.Length - 1);
+            switch (Random.Range(0, randomNumber))
+            {
+                case (int) CommonAbilityUpgrades.Pierce:
+                    playerStats.BulletHits++;
+                    upgradeText.SetText("Bullet Pierce Upgrade");
+                    break;
+                case (int) CommonAbilityUpgrades.BulletCount:
+                    playerStats.Magazine++;
+                    upgradeText.SetText("Magazine Upgrade");
+                    break;
+            }
+        }
+        else if (upgrade == rASprite) // Rare Ability DashFrames
+        {
+            System.Array enumValues = System.Enum.GetValues(typeof(RareAbilityUpgrades));
+            int randomNumber = 1 + (int) enumValues.GetValue(enumValues.Length - 1);
+            switch (Random.Range(0, randomNumber))
+            {
+                case (int) RareAbilityUpgrades.DashFrames:
+                    playerStats.DashIFrames += 0.1f;
+                    upgradeText.SetText("Dash IFrames Upgrade");
+                    break;
+                case (int) RareAbilityUpgrades.Vampirism:
+                    playerStats.Vampirism += 0.1f;
+                    upgradeText.SetText("Vampirism Upgrade");
+                    break;
+                case (int) RareAbilityUpgrades.Multifire:
+                    playerStats.Multifire++;
+                    upgradeText.SetText("Multishot Upgrade");
+                    break;
+            }
+        }
+        
+        else
+        {
+            Debug.LogError("SLOT MACHINE BROKE !?!??!?!?!??!>? Triojkdfngkn sdg do[jknhokmes pkl gio[dfio[gjksdo[jkngijkmo]]]]");
+        }
     }
 
     IEnumerator UpgradeAnim(GameObject upgrade, int index)
@@ -213,7 +339,7 @@ public class SlotMachine : MonoBehaviour
         }
         upgradeOptions.Clear();
         busy = false;
-
+        upgradeText.gameObject.SetActive(true);
     }
 
     private void Finish()
@@ -226,7 +352,7 @@ public class SlotMachine : MonoBehaviour
         anim.speed = 0f;
         for (int i = 0; i < 3; i++)
         {
-            if (upgradeList.Count <= 0)
+            if (upgradeList.Count <= 1)
             {
                 upgradeList = CreateUpgradeList();
             }

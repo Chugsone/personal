@@ -23,17 +23,18 @@ public class BulletCounter : MonoBehaviour
 
         textTransform.anchoredPosition = new Vector3(-100f, -50f, 0f);
         ammo = empty.AddComponent<TMPro.TextMeshProUGUI>();
-        ammo.fontSize = 36;
+        ammo.fontSize = 20;
+        ammo.font = Resources.Load<TMPro.TMP_FontAsset>("Fonts/Pixel");
         ammo.alignment = TMPro.TextAlignmentOptions.Center;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ammo.SetText($"{playerMovement.bullets} | {playerMovement.mag}");
+        ammo.SetText($"{playerMovement.bullets}|{playerMovement.mag}");
         if (playerMovement.reloading)
         {
-            ammo.SetText("Reloading...");
+            ammo.SetText("Reloading");
         }
     }
 }

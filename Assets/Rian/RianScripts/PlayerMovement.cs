@@ -57,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float dashPower = 3.67f;
     private float dashTimer = 0f;
+    private Stats playerStats;
    
     private void Awake()
     {
@@ -64,6 +65,14 @@ public class PlayerMovement : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         trailRenderer = GetComponent<TrailRenderer>();
         trailRenderer.emitting = false;
+        if (gameObject.TryGetComponent<Stats>(out Stats ph))
+        {
+            playerStats = ph;
+        }
+        else
+        {
+            Debug.LogWarning("Player doesnt have a stats script, either update player or campfire script.");
+        }
     }
 
     void Start()
@@ -104,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
         if (KBCounter <= 0)
         {
             rb.AddForce(movementInput * speed);
-            rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, 50f);
+            rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, topSpeed);
         }
         else
         {
@@ -168,6 +177,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
+        playerStats.CurrentIFrames += playerStats.DashIFrames;
         dashTimer = dashCooldown;
         rb.linearVelocity = movementInput * dashPower;
         StartCoroutine(playTrail());
@@ -187,13 +197,35 @@ public class PlayerMovement : MonoBehaviour
             AudioSource.PlayClipAtPoint(ShootFX, Vector2.zero);
             GameObject proj = Instantiate(projectilePrefab, spawn.transform.position, Quaternion.identity);
             
-
+            Projectiles1 projScript = proj.GetComponent<Projectiles1>();
+            projScript.pierceCount = playerStats.BulletHits;
+            projScript.Damage = playerStats.Damage;
             proj.transform.right = gun.transform.right;
             reloaded = false;
             StartCoroutine(GunCooldown());
             bullets -= 1;
+            StartCoroutine(Multishot());
 
             gunAnimator.SetTrigger("Shoot");
+        }
+    }
+
+    IEnumerator Multishot()
+    {
+        for (int i = 0; i < playerStats.Multifire; i++)
+        {
+            if (bullets == 0)
+            {
+                yield break;
+            }
+            yield return new WaitForSeconds(0.1f);
+            GameObject proj = Instantiate(projectilePrefab, spawn.transform.position, Quaternion.identity);
+            Projectiles1 projScript = proj.GetComponent<Projectiles1>();
+            projScript.pierceCount = playerStats.BulletHits;
+            projScript.Damage = playerStats.Damage;
+            proj.transform.right = gun.transform.right;
+            bullets--;
+
         }
     }
 
