@@ -5637,4 +5637,4 @@ MonoBehaviour:
   leftExit: 0
   rightExit: 1
   upExit: 1
-  downExit: 0
+  downExit: 1
