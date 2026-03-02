@@ -54,7 +54,7 @@ public class Projectiles1 : MonoBehaviour
         {
             pierceCount--;
         }
-        else if (collision.gameObject.CompareTag("Enemy"))
+        else if (collision.gameObject.CompareTag("Enemy" ) || collision.gameObject.CompareTag("Shield"))
         {
             pierceCount--;
             if (collision.gameObject.TryGetComponent<Stats>(out Stats enemyStats))

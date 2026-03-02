@@ -1,14 +1,22 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using System.Collections;
+using static Sheild;
 
 public class Stats : MonoBehaviour
 {
     private static Stats _playerStats;
 
+    Sheild sheild;
 
     [Header("Put name here :wilted_rose:")]
     [Tooltip("How much health the object has")][SerializeField] private int _maxHealth = 100;
+    public void Awake()
+    {
+         sheild = GetComponent<Sheild>();
+        
+    }
     public int MaxHealth
     {
         get { return _maxHealth; }
@@ -20,8 +28,16 @@ public class Stats : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (gameObject.CompareTag("Shield"))
+        {
+            sheild.SetPeanutImage((Sheild.PeanutState) (Health));
+        }
+    }
+
     private int _health; 
-    [HideInInspector]
+    //[HideInInspector]
     public int Health
     {
         get { return _health; } 
