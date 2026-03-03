@@ -80,6 +80,7 @@ public class EnemyAI : MonoBehaviour
     private void NewPath()
     {
         path = pathfinder.FindPath(transform.position, player.position);
+        Debug.Log($"New Path: {path}");
         pathIndex = 0;
         rb2d.linearVelocity = Vector3.zero;
     }

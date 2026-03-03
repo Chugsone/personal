@@ -10,6 +10,7 @@ TagManager:
   - Destructible
   - Tilemap
   - Shield
+  - Projectile
   layers:
   - Default
   - TransparentFX

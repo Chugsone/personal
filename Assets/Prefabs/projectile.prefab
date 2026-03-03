@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2221152584351075617}
   m_Layer: 3
   m_Name: projectile
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,6 +51,8 @@ MonoBehaviour:
   speed: 35
   lifetime: 3
   knockbackTime: 1
+  Damage: 1
+  pierceCount: 1
 --- !u!212 &3125840006344363014
 SpriteRenderer:
   m_ObjectHideFlags: 0

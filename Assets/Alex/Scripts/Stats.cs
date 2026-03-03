@@ -28,13 +28,7 @@ public class Stats : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (gameObject.CompareTag("Shield"))
-        {
-            sheild.SetPeanutImage((Sheild.PeanutState) (Health));
-        }
-    }
+   
 
     private int _health; 
     //[HideInInspector]

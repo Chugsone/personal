@@ -5,8 +5,9 @@ public class Sheild : MonoBehaviour
 {  
     public Sprite peanuts, peanuts_1, peanuts_2, peanuts_3, peanuts_4, peanuts_5, peanuts_6, peanuts_7;
     SpriteRenderer peanut; 
+    private PeanutState currentState;
 
-    
+
 
     public enum PeanutState
     {
@@ -53,15 +54,34 @@ public class Sheild : MonoBehaviour
             case PeanutState.Seven:
                 peanut.sprite = peanuts_7;
                 break;
+
+            default:
+                Destroy(gameObject);
+                break;
+
         }
     }
 
     void Start()
     {
-        if (false)//100 > Health > 2)
+        if (false)//100> Health > 2)
         {
             peanut.sprite = peanuts_1;
         }
-;
+
+    
+
     }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Projectile"))
+        {
+            currentState = (PeanutState)((int)currentState + 1);
+            SetPeanutImage(currentState);
+            Debug.Log($"State {(int)currentState}");
+        }
+    }
+
 }
