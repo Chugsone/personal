@@ -171,6 +171,10 @@ public class WFCGen : MonoBehaviour
 
         decorationTilemap.ClearAllTiles();
 
+        for (int i = 0; i < room.GroundTiles.Length; i++)
+        {
+            //pathfinder.SetBlocked(groundTilemap.GetCellCenterWorld(room.GroundTiles[i].position), true);
+        }
 
         // foreach (var tileData in room.tiles)
         // {
@@ -182,7 +186,7 @@ public class WFCGen : MonoBehaviour
         //             break;
         //         case TileLayer.Ground:
         //             groundTilemap.SetTile(pos, tileData.tile);
-        //             pathfinder.SetBlocked(groundTilemap.GetCellCenterWorld(pos), true);
+        //             pathfinder.SetBlocked(groundTilemap.GetCellCenterWorld(pos), true); FIX THIS
         //             break;
         //         case TileLayer.Decoration:
         //             decorationTilemap.SetTile(pos, tileData.tile);
@@ -204,7 +208,6 @@ public class WFCGen : MonoBehaviour
 
         return newList;
     }
-
 
     private void CreateGates(RoomData room, Vector3 worldPos, Vector2Int gridPos)
     {
