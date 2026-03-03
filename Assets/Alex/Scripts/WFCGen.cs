@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
 
 public class WFCGen : MonoBehaviour
 {
@@ -33,6 +32,7 @@ public class WFCGen : MonoBehaviour
     private List<Vector2Int> frontier = new();
     private RoomData bossHall;
     private GameObject holeGO;
+    private bool clearDecorations;
     
 
     public GameObject latestRoom;
@@ -54,6 +54,8 @@ public class WFCGen : MonoBehaviour
     {
         Generate(startOffset, !useSeed ? null : seed);
     }
+
+   
 
     public void Generate(Vector3Int pos, int? seed)
     {
@@ -166,6 +168,8 @@ public class WFCGen : MonoBehaviour
        backgroundTilemap.SetTiles(AddOffset(room.BackgroundTiles, worldPos), true);
        groundTilemap.SetTiles(AddOffset(room.GroundTiles, worldPos), true);
        decorationTilemap.SetTiles(AddOffset(room.DecorationTiles, worldPos), true);
+
+        decorationTilemap.ClearAllTiles();
 
 
         // foreach (var tileData in room.tiles)

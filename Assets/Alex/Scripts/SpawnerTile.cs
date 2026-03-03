@@ -18,7 +18,7 @@ public class SpawnerTile : Tile
             decoration = tilemap.GetComponent<Tilemap>();
         }
 
-        decoration.SetTile(position, null);
+        //decoration.SetTile(position, null);
         Vector3 worldPos = decoration.GetCellCenterWorld(position);
         Instantiate (enemyPrefab, worldPos, Quaternion.identity, WFCGen.Instance.latestRoom.transform.GetChild(0));
         return true;
