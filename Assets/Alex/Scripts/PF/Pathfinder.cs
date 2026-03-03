@@ -30,6 +30,7 @@ public class Pathfinder : MonoBehaviour
 
         while (openList.Count > 0)
         {
+            Debug.Log("test");
             Node currentNode = openList[0];
 
             for (int i = 1; i < openList.Count; i++)
@@ -55,6 +56,7 @@ public class Pathfinder : MonoBehaviour
                     continue;
                 }
 
+                Debug.Log(" WALKABLE");
                 int newCost = currentNode.gCost + ((neighborPos.x != currentNode.position.x && neighborPos.y != currentNode.position.y) ? 14 : 10);
                 Node neighborNode = openList.Find(n => n.position == neighborPos);
                 if (neighborNode == null)
@@ -75,7 +77,7 @@ public class Pathfinder : MonoBehaviour
             }
         }
 
-
+        
         return null;
     }
 
@@ -120,6 +122,15 @@ public class Pathfinder : MonoBehaviour
         if (x >= 0 && y >= 0 && x < gridWidth && y < gridHeight)
         {
             walkableGrid[x, y] = !blocked;
+        }
+
+        for (int i = 0; i < walkableGrid.GetLength(0); i++)
+        {
+            string rowString = "";
+            for (int j = 0; j < walkableGrid.GetLength(1); j++)
+            {
+                rowString += walkableGrid[i, j] ? "O" : "X" + " ";
+            }
         }
 
     }
@@ -185,6 +196,7 @@ public class Pathfinder : MonoBehaviour
             neighbors.Add(downLeft);
         }
 
+        Debug.Log(neighbors.Count);
         return neighbors;
         
     }
