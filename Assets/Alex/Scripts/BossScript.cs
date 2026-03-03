@@ -13,12 +13,15 @@ public class BossScript : MonoBehaviour
     [SerializeField] private GameObject deathWarning;
 
     private GameObject projectilePrefab;
+    private GameObject circleWarningPrefab;
+
     private GameObject player;
     private Stats playerStats;
     [HideInInspector] public int Health;
     private int _maxHealth;
     private int lastHealth;
     private bool toggle;
+    private bool shootPlayer = true;
 
 
     private bool fighting = false;
@@ -39,6 +42,8 @@ public class BossScript : MonoBehaviour
             Debug.LogWarning("Player doesnt have a stats script, either update player or campfire script.");
         }
         projectilePrefab = Resources.Load<GameObject>("Prefabs/BossProj");
+        circleWarningPrefab = Resources.Load<GameObject>("Prefabs/CircleWarning");
+
     }
 
     void Update()
@@ -81,7 +86,11 @@ public class BossScript : MonoBehaviour
         //
         yield return new WaitForSeconds(2f);
         StartCoroutine(ShootCircle(3));
+        if (shootPlayer)
+        {
+            shootPlayer = false;
         StartCoroutine(ShootPlayer());
+        }
         yield return new WaitForSeconds(10f);
         toggle = true;
         //Spawn Enemies here damage phase
@@ -90,7 +99,7 @@ public class BossScript : MonoBehaviour
 
         SliceAttack.Invoke();
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4.5f);
         StartCoroutine(HandleAttacks());
         toggle = false;
 
@@ -112,7 +121,7 @@ public class BossScript : MonoBehaviour
             {
                 GameObject proj = Instantiate(projectilePrefab, transform.position, Quaternion.Euler(0f, 0f, angle + i * (360/bulletsPerShot)));
                 BossProj projScript = proj.GetComponent<BossProj>();
-                projScript.Damage = 25;
+                projScript.Damage = 10;
             }
             angle += 5f;
 
@@ -137,10 +146,14 @@ public class BossScript : MonoBehaviour
         {
             direction = player.transform.position - transform.position;
             angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            GameObject warning = Instantiate(circleWarningPrefab, player.transform.position, Quaternion.identity);
+            Destroy(warning, 0.5f);
+            yield return new WaitForSeconds(0.5f);
             GameObject proj = Instantiate(projectilePrefab, transform.position + new Vector3(direction.normalized.x * 2f, direction.normalized.y * 2f, 0f), Quaternion.Euler(0f, 0f, angle));
             BossProj projScript = proj.GetComponent<BossProj>();
-            projScript.ProjectileSpeed *= 3f;
-            projScript.Damage = Mathf.RoundToInt((float) projScript.Damage * 1.5f);
+            projScript.ProjectileSpeed *= 4f;
+            projScript.Damage = 20;
+
 
             yield return new WaitForSeconds(cooldown);
 

@@ -9,6 +9,11 @@ public class RoomData : ScriptableObject
     public Vector2Int size;
     public int Weight;
     public List<TilePlacement> tiles = new();
+    public TileChangeData[] BackgroundTiles;
+    public TileChangeData[] GroundTiles;
+    public TileChangeData[] DecorationTiles;
+
+
 
     public bool leftExit;
     public bool rightExit;

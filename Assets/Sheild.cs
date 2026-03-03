@@ -58,7 +58,7 @@ public class Sheild : MonoBehaviour
 
     void Start()
     {
-        if (100 > Health > 2)
+        if (false)//100 > Health > 2)
         {
             peanut.sprite = peanuts_1;
         }

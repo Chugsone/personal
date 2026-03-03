@@ -37,7 +37,7 @@ public class Gate : MonoBehaviour
         }
         else //Neighbor room has not been generated yet
         {
-            WFCGen.Instance.PlaceRoom(neighborPos);
+            WFCGen.Instance.PlaceRoom(neighborPos, roomPos);
         }
 
         latestGate = this;

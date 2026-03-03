@@ -18,6 +18,7 @@ public class WFCGen : MonoBehaviour
     [Tooltip("The max amount of rooms to spawn")][SerializeField] private int maxRooms = 5;
     [Tooltip("The starting room.")][SerializeField] private RoomData startRoom;
     [Tooltip("The list of all rooms")][SerializeField] private RoomData[] allRooms;
+    [Tooltip("The list of all the rooms with dead ends.")][SerializeField] private RoomData[] deadEnds;
     [Tooltip("Starting Offset")][SerializeField] private Vector3Int startOffset = new Vector3Int(0, 0, 0);
     [Tooltip("The amount of rooms till the boss room spawns")] [SerializeField] private int roomsTillBoss = 50;
 
@@ -110,15 +111,34 @@ public class WFCGen : MonoBehaviour
         }
     }
 
-    public void PlaceRoom(Vector2Int gridPos)
+    public void PlaceRoom(Vector2Int gridPos, Vector2Int neighborPos)
     {
+        if (!grid.ContainsKey(gridPos))
+        {
+            switch (VectorToDirection(gridPos - neighborPos)) //
+            {
+                case ExitDirections.Up:
+                    grid[gridPos] = deadEnds[1];
+                    break;
+                case ExitDirections.Down:
+                    grid[gridPos] = deadEnds[0];
+                    break;
+                case ExitDirections.Left:
+                    grid[gridPos] = deadEnds[3];
+                    break;
+                case ExitDirections.Right:
+                    grid[gridPos] = deadEnds[2];
+                    break;
+            }
+        }
+        
+        
        PlaceRoom(grid[gridPos], gridPos); 
     }
 
 
     private void PlaceRoom(RoomData room, Vector2Int gridPos)
     {
-
 
         Vector3Int worldPos = startOffset + new Vector3Int(gridPos.x * (room.size.x), gridPos.y * (room.size.y), 0);
         
@@ -143,26 +163,42 @@ public class WFCGen : MonoBehaviour
 
         //Debug.Log("World: " + worldPos + " -> Cell: " + groundTilemap.WorldToCell(worldPos));
 
-       
+       backgroundTilemap.SetTiles(AddOffset(room.BackgroundTiles, worldPos), true);
+       groundTilemap.SetTiles(AddOffset(room.GroundTiles, worldPos), true);
+       decorationTilemap.SetTiles(AddOffset(room.DecorationTiles, worldPos), true);
 
-        foreach (var tileData in room.tiles)
-        {
-            Vector3Int pos = tileData.position + worldPos;
-            switch (tileData.layer)
-            {
-                case TileLayer.Background:
-                    backgroundTilemap.SetTile(pos, tileData.tile);
-                    break;
-                case TileLayer.Ground:
-                    groundTilemap.SetTile(pos, tileData.tile);
-                    pathfinder.SetBlocked(groundTilemap.GetCellCenterWorld(pos), true);
-                    break;
-                case TileLayer.Decoration:
-                    decorationTilemap.SetTile(pos, tileData.tile);
-                    break;
-            }
-        }
+
+        // foreach (var tileData in room.tiles)
+        // {
+        //     Vector3Int pos = tileData.position + worldPos;
+        //     switch (tileData.layer)
+        //     {
+        //         case TileLayer.Background:
+        //             backgroundTilemap.SetTile(pos, tileData.tile);
+        //             break;
+        //         case TileLayer.Ground:
+        //             groundTilemap.SetTile(pos, tileData.tile);
+        //             pathfinder.SetBlocked(groundTilemap.GetCellCenterWorld(pos), true);
+        //             break;
+        //         case TileLayer.Decoration:
+        //             decorationTilemap.SetTile(pos, tileData.tile);
+        //             break;
+        //     }
+        // }
         
+    }
+
+    private TileChangeData[] AddOffset(TileChangeData[] original, Vector3Int offset)
+    {
+        TileChangeData[] newList = new TileChangeData[original.Length];
+        for (int i = 0; i < original.Length; i++)
+        {
+            TileChangeData data = original[i];
+            data.position += offset;
+            newList[i] = data;
+        }
+
+        return newList;
     }
 
 
@@ -283,6 +319,18 @@ public class WFCGen : MonoBehaviour
             ExitDirections.Up => new Vector2Int(0, 1),
             ExitDirections.Down => new Vector2Int(0, -1),
             _ => Vector2Int.zero
+        };
+    }
+
+    private ExitDirections VectorToDirection(Vector2Int vector)
+    {
+        return vector switch
+        {
+            { x: -1, y: 0} => ExitDirections.Left,
+            { x: 1, y: 0} => ExitDirections.Right,
+            { x: 0, y: 1} => ExitDirections.Up,
+            { x: 0, y: -1} => ExitDirections.Down,
+            _ => throw new ArgumentException($"Invalid direction vector: {vector}")
         };
     }
 }

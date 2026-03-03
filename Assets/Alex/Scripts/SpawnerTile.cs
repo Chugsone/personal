@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 public class SpawnerTile : Tile
 {
     [Tooltip("The type of enemy to spawn")] [SerializeField] GameObject enemyPrefab;
-
+    private static Tilemap decoration; 
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
     {
         if (!Application.isPlaying)
@@ -13,9 +13,13 @@ public class SpawnerTile : Tile
             return false;
         }
 
-        Tilemap tm = tilemap.GetComponent<Tilemap>();
-        tm.SetTile(position, null);
-        Vector3 worldPos = tm.GetCellCenterWorld(position);
+        if (decoration == null)
+        {
+            decoration = tilemap.GetComponent<Tilemap>();
+        }
+
+        decoration.SetTile(position, null);
+        Vector3 worldPos = decoration.GetCellCenterWorld(position);
         Instantiate (enemyPrefab, worldPos, Quaternion.identity, WFCGen.Instance.latestRoom.transform.GetChild(0));
         return true;
         

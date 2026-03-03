@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Profiling;
+using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
 public class RoomMaker : MonoBehaviour
@@ -19,9 +20,13 @@ public class RoomMaker : MonoBehaviour
         }
         roomData.tiles.Clear();
 
-        CaptureFromTilemap(backgroundTilemap, TileLayer.Background);
-        CaptureFromTilemap(groundTilemap, TileLayer.Ground);
-        CaptureFromTilemap(decorationTilemap, TileLayer.Decoration);
+
+
+
+
+        roomData.BackgroundTiles = CaptureFromTilemap(backgroundTilemap, TileLayer.Background);
+        roomData.GroundTiles = CaptureFromTilemap(groundTilemap, TileLayer.Ground);
+        roomData.DecorationTiles = CaptureFromTilemap(decorationTilemap, TileLayer.Decoration);
 
         
 
@@ -34,13 +39,14 @@ public class RoomMaker : MonoBehaviour
 
     }
 
-    private void CaptureFromTilemap(Tilemap tilemap, TileLayer layer)
+    private TileChangeData[] CaptureFromTilemap(Tilemap tilemap, TileLayer layer)
     {
+        List<TileChangeData> tiles = new();
         Profiler.BeginSample("test");
 
         if (tilemap == null)
         {
-            return;
+            return null;
         }
 
         BoundsInt bounds = tilemap.cellBounds;
@@ -54,10 +60,12 @@ public class RoomMaker : MonoBehaviour
             }
 
             TilePlacement placement = new TilePlacement {tile = tile, position = pos, layer = layer};
+            tiles.Add(new TileChangeData{tile = tile, position = pos, color = Color.white, transform = Matrix4x4.identity});
             roomData.tiles.Add(placement);
         }
 
         Profiler.EndSample();
+        return tiles.ToArray();
     }
 
 
