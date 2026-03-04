@@ -43,8 +43,8 @@ public class PlayerMovement : MonoBehaviour
     public PlayerMovement playerMovement;
     public bool reloading;
 
-    public AudioSource source;
     public AudioClip ShootFX;
+    public AudioClip songing;
   
     public bool FullAuto = false;
     public bool reloaded = true;
@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        
+        AudioSource.PlayClipAtPoint(songing, transform.position);
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -192,7 +192,7 @@ public class PlayerMovement : MonoBehaviour
        
         if (context.performed && reloaded && bullets > 0 && !reloading)
         {
-            AudioSource.PlayClipAtPoint(ShootFX, Vector2.zero);
+            AudioSource.PlayClipAtPoint(ShootFX, transform.position);
             GameObject proj = Instantiate(projectilePrefab, spawn.transform.position, Quaternion.identity);
             
             Projectiles1 projScript = proj.GetComponent<Projectiles1>();
