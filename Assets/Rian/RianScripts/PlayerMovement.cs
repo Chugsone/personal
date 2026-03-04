@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip ShootFX;
     public AudioClip songing;
   
-    public bool FullAuto = false;
+    public bool GodMode = false;
     public bool reloaded = true;
     public int mag;
     public int bullets = 8;
@@ -92,11 +92,11 @@ public class PlayerMovement : MonoBehaviour
             dashTimer -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
+        if (GodMode)
         {
             recoil = 0;
             mag = 100;
-            Debug.Log("full auto");
+            dashCooldown = 0;
         }
 
       
@@ -133,6 +133,8 @@ public class PlayerMovement : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    
 
     public void Aim(InputAction.CallbackContext context)
     {
@@ -260,5 +262,10 @@ public class PlayerMovement : MonoBehaviour
     {
        //adds one knockback to the player in the inspector
        
+    }
+
+    public void GodModeEnable(InputAction.CallbackContext context)
+    {
+      GodMode = true;
     }
 }
