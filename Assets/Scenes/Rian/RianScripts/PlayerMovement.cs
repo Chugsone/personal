@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
     public bool reloading;
 
     public AudioClip ShootFX;
-    public AudioClip songing;
+    
   
     public bool GodMode = false;
     public bool reloaded = true;
@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        AudioSource.PlayClipAtPoint(songing, transform.position);
+        
         rb = GetComponent<Rigidbody2D>();
     }
 
