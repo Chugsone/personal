@@ -2,7 +2,8 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using static Sheild;
+using UnityEngine.SceneManagement;
+
 
 public class Stats : MonoBehaviour
 {
@@ -94,7 +95,7 @@ public class Stats : MonoBehaviour
                 }
                 else if (gameObject.CompareTag("Player"))
                 {
-                    
+                    SceneManager.LoadScene("Lose");
                 }
             }
         }

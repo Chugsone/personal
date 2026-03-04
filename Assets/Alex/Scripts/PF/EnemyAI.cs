@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -7,14 +8,20 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float maxOffset = 2f;
 
+    private Vector3 startPosition;
     private Vector3 direction;
     private Rigidbody2D rb2d;
     private static Transform player;
     private List<Vector3> path;
     private int pathIndex;
+    private bool timerActive = false;
+    private bool playerFound = false;
+    private float repathTimer;
+    [Tooltip("How often the enemey looks for a new path")] [SerializeField] private float repathDelay = 0.5f;
 
     void Start()
     {
+        startPosition = transform.position;
         if (player == null)
         {
             player = GameObject.FindWithTag("Player").GetComponent<Transform>();
@@ -30,10 +37,15 @@ public class EnemyAI : MonoBehaviour
     void FixedUpdate()
     {
         HandlePath();
-         rb2d.linearVelocity = speed * direction;
+        rb2d.linearVelocity = speed * direction;
 
         Push();
 
+    }
+
+    void OnDisable()
+    {
+        transform.position = startPosition;
     }
 
     private void Push()
@@ -49,23 +61,29 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+
     private void HandlePath()
     {
+        repathTimer -= Time.fixedDeltaTime;
+
         Debug.Log($"Path: {path}");
-        if (path == null || pathIndex >= path.Count)
+        if (path == null) 
         {
-            NewPath();
+            if (repathTimer <= 0f)
+            {
+                NewPath();
+                repathTimer = repathDelay;
+            }
+            rb2d.linearVelocity = Vector3.zero;
             return;
         }
 
-
-         if (Vector3.Distance(player.position, path[^1]) > maxOffset)
-         {
+        if ( pathIndex >= path.Count || Vector3.Distance(player.position, path[^1]) > maxOffset)
+        {
+            rb2d.linearVelocity = Vector3.zero;
             NewPath();
             return;
-         }
-        
-
+        }
         
          direction = path[pathIndex] - transform.position;
          direction = direction.normalized;

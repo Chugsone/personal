@@ -33,6 +33,8 @@ public class WFCGen : MonoBehaviour
     private RoomData bossHall;
     private GameObject holeGO;
     private bool clearDecorations;
+
+    private Dictionary<Vector2Int, GameObject> roomGOs = new ();
     
 
     public GameObject latestRoom;
@@ -138,6 +140,11 @@ public class WFCGen : MonoBehaviour
        PlaceRoom(grid[gridPos], gridPos); 
     }
 
+    public void ToggleRoom(Vector2Int gridPos, bool on)
+    {
+        roomGOs[gridPos].SetActive(on);
+    }
+
 
     private void PlaceRoom(RoomData room, Vector2Int gridPos)
     {
@@ -148,11 +155,12 @@ public class WFCGen : MonoBehaviour
         roomGO.transform.position = worldPos;
 
         GameObject enemiesGO = new GameObject("Room GO");
+        roomGOs[gridPos] = enemiesGO;
         enemiesGO.transform.parent = roomGO.transform;
         Pathfinder pathfinder = enemiesGO.AddComponent<Pathfinder>();
         pathfinder.groundTilemap = groundTilemap;
         BoundsInt roomBounds = new BoundsInt(new Vector3Int(worldPos.x - room.size.x / 2, worldPos.y - room.size.y / 2, 0), new Vector3Int(room.size.x, room.size.y, 1));
-        //pathfinder.BuildGrid(roomBounds);
+        pathfinder.BuildGrid(roomBounds);
         latestRoom = roomGO;
 
         if (roomsTillBoss == 0)
@@ -173,7 +181,7 @@ public class WFCGen : MonoBehaviour
 
         for (int i = 0; i < room.GroundTiles.Length; i++)
         {
-            //pathfinder.SetBlocked(groundTilemap.GetCellCenterWorld(room.GroundTiles[i].position), true);
+            pathfinder.SetBlocked(groundTilemap.GetCellCenterWorld(room.GroundTiles[i].position), true);
         }
 
         // foreach (var tileData in room.tiles)
@@ -219,7 +227,7 @@ public class WFCGen : MonoBehaviour
 
         if (room.leftExit)
         {
-            GameObject gate = Instantiate(gatePrefab, worldPos + new Vector3(-21f, -5f, 0f), Quaternion.identity, latestRoom.transform.GetChild(0));
+            GameObject gate = Instantiate(gatePrefab, worldPos + new Vector3(-21f, -5f, 0f), Quaternion.identity, latestRoom.transform);
             gate.GetComponent<Gate>().roomPos = gridPos;
             gate.GetComponent<Gate>().ExitDirection = ExitDirections.Left;
 
@@ -227,14 +235,14 @@ public class WFCGen : MonoBehaviour
 
         if (room.rightExit)
         {
-            GameObject gate = Instantiate(gatePrefab, worldPos + new Vector3(21f, -5f, 0f), Quaternion.identity, latestRoom.transform.GetChild(0));
+            GameObject gate = Instantiate(gatePrefab, worldPos + new Vector3(21f, -5f, 0f), Quaternion.identity, latestRoom.transform);
             gate.GetComponent<Gate>().roomPos = gridPos;
             gate.GetComponent<Gate>().ExitDirection = ExitDirections.Right;
         }
 
         if (room.upExit)
         {
-            GameObject gate = Instantiate(gatePrefab, worldPos + new Vector3(0f, 10f, 0f), Quaternion.identity, latestRoom.transform.GetChild(0));
+            GameObject gate = Instantiate(gatePrefab, worldPos + new Vector3(0f, 10f, 0f), Quaternion.identity, latestRoom.transform);
             gate.GetComponent<Gate>().roomPos = gridPos;
             gate.GetComponent<Gate>().ExitDirection = ExitDirections.Up;
             gate.transform.localScale = new Vector3(4f, 1f, 1f);
@@ -242,7 +250,7 @@ public class WFCGen : MonoBehaviour
 
         if (room.downExit)
         {
-            GameObject gate = Instantiate(gatePrefab, worldPos + new Vector3(0f, -10f, 0f), Quaternion.identity, latestRoom.transform.GetChild(0));
+            GameObject gate = Instantiate(gatePrefab, worldPos + new Vector3(0f, -10f, 0f), Quaternion.identity, latestRoom.transform);
             gate.GetComponent<Gate>().roomPos = gridPos;
             gate.GetComponent<Gate>().ExitDirection = ExitDirections.Down;
             gate.transform.localScale = new Vector3(4f, 1f, 1f);

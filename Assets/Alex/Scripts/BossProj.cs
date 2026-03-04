@@ -40,7 +40,10 @@ public class BossProj : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(Tag.EnumTagToString(_targetType)))
         {
-            Debug.Log("test");
+            if (collision.gameObject.TryGetComponent<Stats>(out Stats hitStats))
+            {
+                hitStats.Health -= Damage;
+            }
         }
         else if (collision.gameObject.CompareTag("Ground") && !IgnoreGround)
         {

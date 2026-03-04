@@ -62,18 +62,6 @@ public class Sheild : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        if (false)//100> Health > 2)
-        {
-            peanut.sprite = peanuts_1;
-        }
-
-    
-
-    }
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Projectile"))
