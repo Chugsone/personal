@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 public class Sheild : MonoBehaviour
 {  
     public Sprite peanuts, peanuts_1, peanuts_2, peanuts_3, peanuts_4, peanuts_5, peanuts_6, peanuts_7;
     SpriteRenderer peanut; 
     private PeanutState currentState;
+    private static Transform player;
 
 
 
@@ -22,6 +24,15 @@ public class Sheild : MonoBehaviour
     private void Awake()
     {
         peanut = GetComponent<SpriteRenderer>();
+        if (player == null)
+        {
+            player = GameObject.FindWithTag("Player").transform;
+        }
+    }
+    private void FixedUpdate()
+    {
+        transform.localPosition = (player.position - transform.parent.position).normalized + new Vector3(0f, 0.5f, 0f);
+    
     }
 
     public void SetPeanutImage(PeanutState state)
@@ -54,6 +65,7 @@ public class Sheild : MonoBehaviour
                 break;
 
             default:
+                transform.parent.GetComponent<PeanutAI>().HasShield = false;
                 Destroy(gameObject);
                 break;
 
