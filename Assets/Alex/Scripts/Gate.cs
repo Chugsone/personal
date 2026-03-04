@@ -24,14 +24,14 @@ public class Gate : MonoBehaviour
 
         Vector2Int neighborPos = roomPos + DirectionToVector(ExitDirection);
 
-        Debug.Log($"Neighbor Room Pos: {neighborPos}");
 
         if (WFCGen.Instance.InGrid(neighborPos)) //Checks if Neighbor room has been generated.
         {
-            Debug.Log("test1");
             if (latestGate.roomPos != roomPos) //This means that the player entered a different room
             {
-            Debug.Log("test2");
+                Debug.Log("Entered new room");
+                WFCGen.Instance.ToggleRoom(roomPos, true);
+                WFCGen.Instance.ToggleRoom(latestGate.roomPos, false);
 
             }
         }

@@ -11,6 +11,7 @@ public class Pathfinder : MonoBehaviour
     private int gridWidth; 
     private int gridHeight; 
 
+
     private BoundsInt debugBounds;
 
     void Start()
@@ -21,6 +22,12 @@ public class Pathfinder : MonoBehaviour
     {
         Vector3Int start = groundTilemap.WorldToCell(startWorld);
         Vector3Int target = groundTilemap.WorldToCell(targetWorld);  
+
+        if (!IsWalkable(start) || !IsWalkable(target))
+        {
+            return null;
+        }
+
         gizmoTarget = target;
         List<Node> openList = new List<Node>();
         HashSet<Vector3Int> closedSet = new ();
@@ -81,6 +88,7 @@ public class Pathfinder : MonoBehaviour
         return null;
     }
 
+
     public void BuildGrid(BoundsInt bounds) //Could likely do part of this incide the wfcgen
     {
         debugBounds = bounds;
@@ -122,15 +130,6 @@ public class Pathfinder : MonoBehaviour
         if (x >= 0 && y >= 0 && x < gridWidth && y < gridHeight)
         {
             walkableGrid[x, y] = !blocked;
-        }
-
-        for (int i = 0; i < walkableGrid.GetLength(0); i++)
-        {
-            string rowString = "";
-            for (int j = 0; j < walkableGrid.GetLength(1); j++)
-            {
-                rowString += walkableGrid[i, j] ? "O" : "X" + " ";
-            }
         }
 
     }
