@@ -10155,7 +10155,31 @@ MonoBehaviour:
     m_ActionId: f1ba0d36-48eb-4cd5-b651-1c94a6531f70
     m_ActionName: 'Player/Jump[/Keyboard/space]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -6926432120547162988}
+        m_TargetAssemblyTypeName: Stats, Assembly-CSharp
+        m_MethodName: set_MaxHealth
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 10000
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8483400121755777894}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: GodModeEnable
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2776c80d-3c14-4091-8c56-d04ced07a2b0
     m_ActionName: 'Player/Previous[/Keyboard/1]'
   - m_PersistentCalls:
@@ -10261,9 +10285,9 @@ MonoBehaviour:
   direction: 0
   playerMovement: {fileID: 8483400121755777894}
   reloading: 0
-  source: {fileID: 7791142584603094280}
   ShootFX: {fileID: 8300000, guid: 60cd4c1da6b3c534fa43e7e8012b5b25, type: 3}
-  FullAuto: 0
+  songing: {fileID: 0}
+  GodMode: 0
   reloaded: 1
   mag: 8
   bullets: 8
@@ -10295,12 +10319,12 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: cf2211d2137d4614fbb93953c845685a, type: 3}
+  m_Resource: {fileID: 8300000, guid: cf2211d2137d4614fbb93953c845685a, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

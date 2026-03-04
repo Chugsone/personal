@@ -43,10 +43,10 @@ public class PlayerMovement : MonoBehaviour
     public PlayerMovement playerMovement;
     public bool reloading;
 
-    public AudioSource source;
     public AudioClip ShootFX;
+    
   
-    public bool FullAuto = false;
+    public bool GodMode = false;
     public bool reloaded = true;
     public int mag;
     public int bullets = 8;
@@ -92,11 +92,11 @@ public class PlayerMovement : MonoBehaviour
             dashTimer -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
+        if (GodMode)
         {
             recoil = 0;
             mag = 100;
-            Debug.Log("full auto");
+            dashCooldown = 0;
         }
 
       
@@ -133,6 +133,8 @@ public class PlayerMovement : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    
 
     public void Aim(InputAction.CallbackContext context)
     {
@@ -192,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
        
         if (context.performed && reloaded && bullets > 0 && !reloading)
         {
-            AudioSource.PlayClipAtPoint(ShootFX, Vector2.zero);
+            AudioSource.PlayClipAtPoint(ShootFX, transform.position);
             GameObject proj = Instantiate(projectilePrefab, spawn.transform.position, Quaternion.identity);
             
             Projectiles1 projScript = proj.GetComponent<Projectiles1>();
@@ -260,5 +262,10 @@ public class PlayerMovement : MonoBehaviour
     {
        //adds one knockback to the player in the inspector
        
+    }
+
+    public void GodModeEnable(InputAction.CallbackContext context)
+    {
+      GodMode = true;
     }
 }
