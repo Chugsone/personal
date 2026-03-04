@@ -9,15 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6819660362423826186}
-  - component: {fileID: 11107843145841589}
   - component: {fileID: 4058451535455783180}
-  - component: {fileID: 564035530812745743}
   - component: {fileID: 150116468137297926}
   - component: {fileID: 9174640436074109867}
   - component: {fileID: 3318314085459536491}
   m_Layer: 0
   m_Name: peanuts_0
-  m_TagString: Shield
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,30 +35,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 815444589104749563}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &11107843145841589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2204003387363685348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25ac4e71407660c48b1b1a7a5d64629e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxHealth: 175
-  _moveSpeed: 25
-  _defense: 0
-  _damage: 100
-  _expReq: 100
-  _expMultiplier: 1.5
-  _magazine: 8
-  levelUp:
-    m_PersistentCalls:
-      m_Calls: []
-  healParticles: {fileID: 0}
-  damageParticles: {fileID: 0}
 --- !u!212 &4058451535455783180
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -116,19 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &564035530812745743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2204003387363685348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb54abaeced88ff44ba9853239c901ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 7
 --- !u!61 &150116468137297926
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -242,7 +203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &815444589104749563
 Transform:
   m_ObjectHideFlags: 0
@@ -439,3 +400,4 @@ MonoBehaviour:
   pathfinder: {fileID: 0}
   speed: 5
   maxOffset: 2
+  repathDelay: 0.5
