@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 9143710456113508706}
   - component: {fileID: 2658789650505663133}
   - component: {fileID: 8303615973699670303}
-  - component: {fileID: 4906204301565120548}
   - component: {fileID: 9155838727928482820}
   - component: {fileID: 4622792002520663429}
   - component: {fileID: 1385943613830357776}
@@ -108,20 +107,7 @@ MonoBehaviour:
   pathfinder: {fileID: 0}
   speed: 1
   maxOffset: 2
---- !u!114 &4906204301565120548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8874296350619506302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39fcd3826cfa48343a29bd582914291c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 5
-  stats: {fileID: 0}
+  repathDelay: 0.5
 --- !u!58 &9155838727928482820
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -222,9 +208,10 @@ MonoBehaviour:
   _maxHealth: 100
   _moveSpeed: 25
   _defense: 0
-  _damage: 100
-  _expReq: 100
-  _expMultiplier: 1.5
+  _damage: 25
+  _exp: 55
+  _expReq: 99999999
+  _expMultiplier: 0
   _magazine: 8
   levelUp:
     m_PersistentCalls:

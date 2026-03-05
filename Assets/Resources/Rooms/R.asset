@@ -4341,6 +4341,9 @@ MonoBehaviour:
   - tile: {fileID: 11400000, guid: 92bbacc546d59f6498f178b2ac2eba40, type: 2}
     position: {x: 6, y: -8, z: 0}
     layer: 2
+  - tile: {fileID: 11400000, guid: 1c191627dc7187944aaa300e44429002, type: 2}
+    position: {x: 4, y: -6, z: 0}
+    layer: 2
   - tile: {fileID: 11400000, guid: d9a7cae28cf912042a94d39ee52af8ad, type: 2}
     position: {x: 24, y: -6, z: 0}
     layer: 2
@@ -4355,6 +4358,9 @@ MonoBehaviour:
     layer: 2
   - tile: {fileID: 11400000, guid: 10e13e73d9e115a40be50cc1a68db900, type: 2}
     position: {x: 6, y: 0, z: 0}
+    layer: 2
+  - tile: {fileID: 11400000, guid: 1c191627dc7187944aaa300e44429002, type: 2}
+    position: {x: 9, y: 0, z: 0}
     layer: 2
   - tile: {fileID: 11400000, guid: 92bbacc546d59f6498f178b2ac2eba40, type: 2}
     position: {x: 13, y: 0, z: 0}
@@ -33202,6 +33208,26 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
+  - m_Position: {x: 4, y: -6, z: 0}
+    m_TileAsset: {fileID: 11400000, guid: 1c191627dc7187944aaa300e44429002, type: 2}
+    m_Color: {r: 1, g: 1, b: 1, a: 1}
+    m_Transform:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
   - m_Position: {x: 24, y: -6, z: 0}
     m_TileAsset: {fileID: 11400000, guid: d9a7cae28cf912042a94d39ee52af8ad, type: 2}
     m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -33284,6 +33310,26 @@ MonoBehaviour:
       e33: 1
   - m_Position: {x: 6, y: 0, z: 0}
     m_TileAsset: {fileID: 11400000, guid: 10e13e73d9e115a40be50cc1a68db900, type: 2}
+    m_Color: {r: 1, g: 1, b: 1, a: 1}
+    m_Transform:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+  - m_Position: {x: 9, y: 0, z: 0}
+    m_TileAsset: {fileID: 11400000, guid: 1c191627dc7187944aaa300e44429002, type: 2}
     m_Color: {r: 1, g: 1, b: 1, a: 1}
     m_Transform:
       e00: 1

@@ -5607,6 +5607,9 @@ MonoBehaviour:
   - tile: {fileID: 11400000, guid: e94b86c28ce43454fa364b19e272f87c, type: 2}
     position: {x: -17, y: -2, z: 0}
     layer: 2
+  - tile: {fileID: 11400000, guid: 7c91bb8c442ce4348af2b3be0714d015, type: 2}
+    position: {x: -13, y: -2, z: 0}
+    layer: 2
   - tile: {fileID: 11400000, guid: d9a7cae28cf912042a94d39ee52af8ad, type: 2}
     position: {x: -12, y: 0, z: 0}
     layer: 2
@@ -42875,6 +42878,26 @@ MonoBehaviour:
       e33: 1
   - m_Position: {x: -17, y: -2, z: 0}
     m_TileAsset: {fileID: 11400000, guid: e94b86c28ce43454fa364b19e272f87c, type: 2}
+    m_Color: {r: 1, g: 1, b: 1, a: 1}
+    m_Transform:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+  - m_Position: {x: -13, y: -2, z: 0}
+    m_TileAsset: {fileID: 11400000, guid: 7c91bb8c442ce4348af2b3be0714d015, type: 2}
     m_Color: {r: 1, g: 1, b: 1, a: 1}
     m_Transform:
       e00: 1

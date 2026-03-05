@@ -159,6 +159,22 @@ PrefabInstance:
       propertyPath: levelUp.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 3100638120806664610, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100638120806664610, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100638120806664610, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100638120806664610, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4695628315788831691, guid: b26a24034611cbb42a36a8285aa99fa9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1097,6 +1113,7 @@ MonoBehaviour:
   _moveSpeed: 25
   _defense: 0
   _damage: 100
+  _exp: 0
   _expReq: 100
   _expMultiplier: 1.5
   _magazine: 8
@@ -1229,7 +1246,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1022833151
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1301,6 +1318,7 @@ MonoBehaviour:
   _moveSpeed: 25
   _defense: 0
   _damage: 100
+  _exp: 0
   _expReq: 100
   _expMultiplier: 1.5
   _magazine: 8
@@ -1524,9 +1542,8 @@ MonoBehaviour:
   direction: 0
   playerMovement: {fileID: 0}
   reloading: 0
-  source: {fileID: 0}
   ShootFX: {fileID: 0}
-  FullAuto: 0
+  GodMode: 0
   reloaded: 1
   mag: 0
   bullets: 8
@@ -7027,6 +7044,7 @@ MonoBehaviour:
   _moveSpeed: 25
   _defense: 0
   _damage: 100
+  _exp: 0
   _expReq: 100
   _expMultiplier: 1.5
   _magazine: 8
@@ -7067,14 +7085,27 @@ MonoBehaviour:
   maxRooms: 1000
   startRoom: {fileID: 11400000, guid: bd2b679390dd37f47845768ecb0b8daf, type: 2}
   allRooms:
-  - {fileID: 11400000, guid: bd2b679390dd37f47845768ecb0b8daf, type: 2}
+  - {fileID: 11400000, guid: 22d335f01ee7a63498e21c9dc4aea830, type: 2}
+  - {fileID: 11400000, guid: 58c8242a44bed2343bb6adcd54fa80ca, type: 2}
+  - {fileID: 11400000, guid: 1ed274ca1c2d0af4eb1ecb5f0a4f7d07, type: 2}
+  - {fileID: 11400000, guid: 87bbed2a277bdf844ac4775244571c44, type: 2}
+  - {fileID: 11400000, guid: ca6d690e0f2b6304fb13e6000afe6337, type: 2}
+  - {fileID: 11400000, guid: ba4faba37ad7e2247a34254ea2c5f419, type: 2}
+  - {fileID: 11400000, guid: c4164d6d900909d4d9eb750da395ff55, type: 2}
+  - {fileID: 11400000, guid: 001b31e551d5ca3428d49067cd145a51, type: 2}
+  - {fileID: 11400000, guid: 1f57b522042a9fb4faf13e089e343f3a, type: 2}
+  - {fileID: 11400000, guid: afbe929cc31bf8b49b29e21a0d0854a3, type: 2}
+  - {fileID: 11400000, guid: 98c237e4899f38342a793398fc87a993, type: 2}
+  - {fileID: 11400000, guid: aec4169772ca0b54a8512243d31abb1a, type: 2}
+  - {fileID: 11400000, guid: 7d860418a111dca49a46e55c068a7b62, type: 2}
+  - {fileID: 11400000, guid: e89c6726b3502fb4db04364a8d0aa2d6, type: 2}
   deadEnds:
   - {fileID: 11400000, guid: 146ec480f6a27de4eaf1a22dcd6f2740, type: 2}
   - {fileID: 11400000, guid: b645f8815005c6844a00bf0736be83c9, type: 2}
   - {fileID: 11400000, guid: c2f87f2631bb4994f8003d2ac1ebda8a, type: 2}
   - {fileID: 11400000, guid: 63c2efd7b90ef6145a847f690b101eb2, type: 2}
   startOffset: {x: 0, y: 0, z: 0}
-  roomsTillBoss: 5
+  roomsTillBoss: 50
   backgroundTilemap: {fileID: 1207166159}
   groundTilemap: {fileID: 1447385782}
   decorationTilemap: {fileID: 1680292284}
@@ -7511,7 +7542,7 @@ MonoBehaviour:
     rid: 9030468758760325193
   m_ShadowCastingSource: 2
   m_ShadowMesh:
-    m_Mesh: {fileID: 2000167410}
+    m_Mesh: {fileID: 1978700088}
     m_LocalBounds:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0, y: 0, z: 0}
@@ -8580,7 +8611,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862391679}
   m_CullTransparentMesh: 1
---- !u!43 &2000167410
+--- !u!43 &1978700088
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
