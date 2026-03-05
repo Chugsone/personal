@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Henry.unity
+    guid: 52d9304877b453e41a4c332791e39cb0
+  - enabled: 1
     path: Assets/Scenes/Alex.unity
     guid: ae4ced8448c09f2438eda445b28a2617
   - enabled: 1
@@ -17,9 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: 1f37a4ff7c8e2bb429348dfc1e1f183a
-  - enabled: 1
-    path: Assets/Scenes/Henry.unity
-    guid: 52d9304877b453e41a4c332791e39cb0
   - enabled: 1
     path: Assets/Scenes/Lose.unity
     guid: ee07e70a047858242a60adafe26740ed

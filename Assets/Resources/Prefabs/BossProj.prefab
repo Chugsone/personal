@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5048896095747743876}
   - component: {fileID: 8571966258098588818}
   - component: {fileID: 902166945319896986}
-  - component: {fileID: 6099519960379712076}
+  - component: {fileID: 2691732134850419082}
   m_Layer: 0
   m_Name: BossProj
   m_TagString: Untagged
@@ -134,8 +134,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!58 &6099519960379712076
-CircleCollider2D:
+--- !u!61 &2691732134850419082
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -169,4 +169,14 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.65625, y: 0.40625}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.65625, y: 0.40625}
+  m_EdgeRadius: 0

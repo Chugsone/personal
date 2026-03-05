@@ -17,8 +17,6 @@ public class NavyAI : MonoBehaviour
     private static Transform player;
     private List<Vector3> path;
     private int pathIndex;
-    private bool timerActive = false;
-    private bool playerFound = false;
     private float repathTimer;
     private static Stats playerStats;
     private Stats stats;

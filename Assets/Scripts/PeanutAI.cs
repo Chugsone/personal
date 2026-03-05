@@ -26,13 +26,12 @@ public class PeanutAI : MonoBehaviour
     private static Transform player;
     private List<Vector3> path;
     private int pathIndex;
-    private bool timerActive = false;
-    private bool playerFound = false;
     private float repathTimer;
     private bool hasSheild = true;
     private static Stats playerStats;
     private SpriteRenderer childSR;
     private Stats stats;
+    private float deaggro = 10f;
 
     [Tooltip("How often the enemey looks for a new path")][SerializeField] private float repathDelay = 0.5f;
 
@@ -99,6 +98,9 @@ public class PeanutAI : MonoBehaviour
         Debug.Log($"Path: {path}");
         if (hasSheild)
         {
+            direction = Vector3.zero;
+            rb2d.linearVelocity = Vector3.zero;
+
             attackTimer -= Time.fixedDeltaTime;
             if (attackTimer > 0f)
             {
@@ -106,8 +108,16 @@ public class PeanutAI : MonoBehaviour
                 rb2d.linearVelocity = Vector3.zero;
                 return;
             }
+            
+            float distance = Vector3.Distance(transform.position, player.position);
+            if (distance > deaggro)
+            {
+                direction = Vector3.zero;
+                rb2d.linearVelocity = Vector3.zero;
+                return;
+            }
 
-            if (Vector3.Distance(transform.position, player.position) < attackRange)
+            if (distance < attackRange)
             {
 
                 Attack();
@@ -169,7 +179,11 @@ public class PeanutAI : MonoBehaviour
     IEnumerator ReturnShield()
     {
         yield return new WaitForSeconds(attackCooldown / 3f);
-        childSR.color = Color.white;
+        if (childSR != null)
+        {
+            childSR.color = Color.white;
+            
+        }
 
     }
 

@@ -17,11 +17,10 @@ public class CoffeeBeanAI : MonoBehaviour
     private static Transform player;
     private List<Vector3> path;
     private int pathIndex;
-    private bool timerActive = false;
-    private bool playerFound = false;
     private float repathTimer;
     private static Stats playerStats;
     private Stats stats;
+    private float deaggro = 10f;
 
     [Tooltip("How often the enemey looks for a new path")][SerializeField] private float repathDelay = 0.5f;
 
@@ -80,16 +79,27 @@ public class CoffeeBeanAI : MonoBehaviour
     private void HandlePath()
     {
         repathTimer -= Time.fixedDeltaTime;
+        direction = Vector3.zero;
+        rb2d.linearVelocity = Vector3.zero;
         Debug.Log($"Path: {path}");
             attackTimer -= Time.fixedDeltaTime;
             if (attackTimer > 0f)
             {
                 rb2d.linearVelocity = Vector3.zero;
                 direction = Vector3.zero; 
-            return;
+                return;
             }
+        
+        float distance = Vector3.Distance(transform.position, player.position);
 
-        if (Vector3.Distance(transform.position, player.position) < 3f)
+        if (distance > deaggro)
+        {
+            rb2d.linearVelocity = Vector3.zero;
+            direction = Vector3.zero; 
+            return;
+        }
+
+        if (distance < 3f)
         {
             direction = (player.position - transform.position).normalized;
             return;

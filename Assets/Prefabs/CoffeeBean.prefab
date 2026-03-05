@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathfinder: {fileID: 0}
-  speed: 5
+  speed: 10
   maxOffset: 2
   attackCooldown: 2
   repathDelay: 0.5

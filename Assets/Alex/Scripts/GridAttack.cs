@@ -15,12 +15,14 @@ public class GridAttack : MonoBehaviour
     [SerializeField] private float delayAfterWarning = 0.5f;
     [SerializeField] private float delayBetween = 0.5f;
 
-
+    private float startAngle;
     private float angleOffset;
     private List<GameObject> activeLines = new List<GameObject>();
 
     void Start()
     {
+        startAngle = Random.Range(0f, 160f);
+        angleOffset = startAngle;
         bulletPrefab = Resources.Load<GameObject>("Prefabs/BossProj");
         warningPrefab = Resources.Load<GameObject>("Prefabs/Warning");
     }
@@ -40,7 +42,7 @@ public class GridAttack : MonoBehaviour
         yield return new WaitForSeconds(delayAfterWarning);
 
         FireProjectiles();
-        if (angleOffset >= 181f)
+        if (angleOffset >= startAngle + 181f)
         {
             angleOffset = 0f;
             yield break;

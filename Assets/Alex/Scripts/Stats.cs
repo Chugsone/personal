@@ -84,7 +84,12 @@ public class Stats : MonoBehaviour
 
             if (_health <= 0)
             {
-                if (gameObject.CompareTag("Enemy"))
+                if (gameObject.name == "Boss")
+                {
+                    return;
+                }
+                
+                else if (gameObject.CompareTag("Enemy"))
                 {
                     if (_playerStats == null)
                     {

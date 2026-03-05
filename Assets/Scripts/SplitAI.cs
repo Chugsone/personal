@@ -18,8 +18,6 @@ public class SplitAI : MonoBehaviour
     private static Transform player;
     private List<Vector3> path;
     private int pathIndex;
-    private bool timerActive = false;
-    private bool playerFound = false;
     private float repathTimer;
     private static Stats playerStats;
     private Stats stats;
@@ -27,11 +25,17 @@ public class SplitAI : MonoBehaviour
     private bool attacking;
     private float attackDuration = 0.5f;
     private float attackTimer2;
+    private bool hitPlayer;
+    private Vector3 lastSafePos;
+    private GameObject deathAnim;
+    private float deaggro = 10f;
+    private bool buffer = false;
 
     [Tooltip("How often the enemey looks for a new path")][SerializeField] private float repathDelay = 0.5f;
 
     void Start()
     {
+        deathAnim = Resources.Load<GameObject>("Prefabs/SplitPeaDeath");
         attackTimer2 = attackDuration;
         originalSpeed = speed;
         childSR = GetComponentInChildren<SpriteRenderer>();
@@ -63,6 +67,7 @@ public class SplitAI : MonoBehaviour
         rb2d.linearVelocity = speed * direction;
 
         Push();
+        lastSafePos = transform.position;
 
     }
 
@@ -88,27 +93,47 @@ public class SplitAI : MonoBehaviour
     private void HandlePath()
     {
         repathTimer -= Time.fixedDeltaTime;
-        Debug.Log($"Path: {path}");
         attackTimer -= Time.fixedDeltaTime;
 
         if (attacking)
         {
+            if (!buffer)
+            {
+                return;
+            }
             attackTimer2 -= Time.fixedDeltaTime;
-            direction = (player.position - transform.position).normalized;
             if (attackTimer2 <= 0f)
             {
                 attacking = false;
+                hitPlayer = false;
+
                 speed = originalSpeed;
                 attackTimer2 = attackDuration;
                 GetComponent<CircleCollider2D>().isTrigger = false;
                 direction = Vector3.zero;
                 rb2d.linearVelocity = Vector3.zero;
+                buffer = false;
 
             }
+            return;
             
         }
 
-        if (Vector3.Distance(transform.position, player.position) < 5f && attackTimer < 0f)
+        direction = Vector3.zero;
+        rb2d.linearVelocity = Vector3.zero;
+
+        
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        
+        if (distance > deaggro)
+        {
+            direction = Vector3.zero;
+            rb2d.linearVelocity = Vector3.zero;
+            return;
+        }
+
+        if (distance < 3f && attackTimer < 0f)
         {
             rb2d.linearVelocity = Vector3.zero;
             direction = Vector3.zero;
@@ -147,18 +172,25 @@ public class SplitAI : MonoBehaviour
 
     }
 
-    private void Attack()
+    private void  Attack()
     {
+
+        attacking = true;
+        direction = (player.position - transform.position).normalized;
         attackTimer = attackCooldown;
-        speed *= 4f;
+        speed = originalSpeed * 4f;
         GetComponent<CircleCollider2D>().isTrigger = true;
         GetComponent<SpriteRenderer>().color = Color.red;
         StartCoroutine(ReturnSprite());
-        playerStats.Health -= stats.Damage;
+        StartCoroutine(Wait());
 
     }
 
-    
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(3f);
+        buffer = true;
+    }
 
 
     IEnumerator ReturnSprite()
@@ -166,6 +198,30 @@ public class SplitAI : MonoBehaviour
         yield return new WaitForSeconds(attackCooldown / 3f);
         GetComponent<SpriteRenderer>().color = Color.white;
 
+
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Player") && !hitPlayer)
+        {
+            hitPlayer = true;
+            playerStats.Health -= stats.Damage;
+        }
+        else if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Destructible"))
+        {
+            transform.position = lastSafePos;
+            GetComponent<CircleCollider2D>().isTrigger = false;
+            attacking = false;
+            hitPlayer = false;
+
+            speed = originalSpeed;
+            attackTimer2 = attackDuration;
+            direction = Vector3.zero;
+            rb2d.linearVelocity = Vector3.zero;
+            buffer = false;
+
+        }
     }
 
     private void NewPath()
@@ -174,11 +230,16 @@ public class SplitAI : MonoBehaviour
         Debug.Log($"New Path: {path}");
         pathIndex = 0;
         rb2d.linearVelocity = Vector3.zero;
+        
     }
 
-    private void Update()
+    void OnDestroy()
     {
-
+        if (stats.Health == 0)
+        {
+            Instantiate(deathAnim, lastSafePos, Quaternion.identity, transform.parent); 
+            
+        }
     }
 
 }
