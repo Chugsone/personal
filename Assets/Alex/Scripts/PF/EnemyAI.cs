@@ -14,8 +14,6 @@ public class EnemyAI : MonoBehaviour
     private static Transform player;
     private List<Vector3> path;
     private int pathIndex;
-    private bool timerActive = false;
-    private bool playerFound = false;
     private float repathTimer;
     [Tooltip("How often the enemey looks for a new path")] [SerializeField] private float repathDelay = 0.5f;
 

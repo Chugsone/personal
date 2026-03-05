@@ -10,15 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 2468360240973400314}
   - component: {fileID: 2827554243252551018}
-  - component: {fileID: 5033667015887061026}
-  - component: {fileID: 8291685348390077633}
   - component: {fileID: 4086548050361737064}
   - component: {fileID: 2256961176465990940}
   - component: {fileID: 6991914865475636688}
   - component: {fileID: 944823998495458897}
+  - component: {fileID: 677454052117234583}
   m_Layer: 0
   m_Name: CoffeeBean
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 5222051868388083138}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.941, y: 1.528, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -93,35 +92,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5033667015887061026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5222051868388083138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a937485ef32f05a4e8acf22b5bfef74c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathfinder: {fileID: 0}
-  speed: 25
-  maxOffset: 2
---- !u!114 &8291685348390077633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5222051868388083138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39fcd3826cfa48343a29bd582914291c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  stats: {fileID: 0}
 --- !u!96 &4086548050361737064
 TrailRenderer:
   serializedVersion: 3
@@ -314,14 +284,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
-  _moveSpeed: 25
+  _moveSpeed: 5
   _defense: 0
-  _damage: 100
-  _expReq: 100
-  _expMultiplier: 1.5
+  _damage: 10
+  _exp: 30
+  _expReq: 9999999
+  _expMultiplier: 0
   _magazine: 8
   levelUp:
     m_PersistentCalls:
       m_Calls: []
   healParticles: {fileID: 0}
   damageParticles: {fileID: 0}
+--- !u!114 &677454052117234583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5222051868388083138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93fcdda5fd55f19438f7e9f32666bac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathfinder: {fileID: 0}
+  speed: 10
+  maxOffset: 2
+  attackCooldown: 2
+  repathDelay: 0.5
