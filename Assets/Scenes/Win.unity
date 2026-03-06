@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 279822060}
   - component: {fileID: 279822062}
   - component: {fileID: 279822061}
+  - component: {fileID: 279822063}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -153,8 +154,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 270.5}
-  m_SizeDelta: {x: 957.7208, y: 541}
+  m_AnchoredPosition: {x: 0.0099792, y: 504.41}
+  m_SizeDelta: {x: 1920, y: 1008.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &279822061
 MonoBehaviour:
@@ -176,7 +177,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7448053797482839620, guid: c523f378960bf374ab93c527aef2f3f4, type: 3}
+  m_Sprite: {fileID: 5935077166087356207, guid: c1a20a08edfead140aefe6e220c47e7a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -194,6 +195,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 279822059}
   m_CullTransparentMesh: 1
+--- !u!95 &279822063
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279822059}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 5530465478552552710, guid: c1a20a08edfead140aefe6e220c47e7a, type: 3}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &506540938
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,8 +508,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
