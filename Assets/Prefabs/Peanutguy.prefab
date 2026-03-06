@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 6819660362423826186}
   - component: {fileID: 4058451535455783180}
   - component: {fileID: 150116468137297926}
-  - component: {fileID: 9174640436074109867}
   - component: {fileID: 3318314085459536491}
   m_Layer: 0
   m_Name: peanuts_0
-  m_TagString: Untagged
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,7 +119,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -136,33 +135,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &9174640436074109867
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2204003387363685348}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &3318314085459536491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +168,7 @@ GameObject:
   - component: {fileID: 3771860089569580599}
   - component: {fileID: 7569008363878272570}
   - component: {fileID: 6409839796629836626}
-  - component: {fileID: 3195074102868228185}
+  - component: {fileID: -8021030911434806912}
   m_Layer: 0
   m_Name: Peanutguy
   m_TagString: Enemy
@@ -290,9 +262,10 @@ MonoBehaviour:
   _maxHealth: 100
   _moveSpeed: 25
   _defense: 0
-  _damage: 100
-  _expReq: 100
-  _expMultiplier: 1.5
+  _damage: 20
+  _exp: 50
+  _expReq: 99999
+  _expMultiplier: 0
   _magazine: 8
   levelUp:
     m_PersistentCalls:
@@ -385,7 +358,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &3195074102868228185
+--- !u!114 &-8021030911434806912
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -394,10 +367,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6981141364928382684}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a937485ef32f05a4e8acf22b5bfef74c, type: 3}
+  m_Script: {fileID: 11500000, guid: 63903afc14529b941bf7da684bb10896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pathfinder: {fileID: 0}
   speed: 5
   maxOffset: 2
+  attackRange: 2
+  attackCooldown: 3
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
   repathDelay: 0.5

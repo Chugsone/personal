@@ -84,13 +84,19 @@ public class Stats : MonoBehaviour
 
             if (_health <= 0)
             {
-                if (gameObject.CompareTag("Enemy"))
+                if (gameObject.name == "Boss")
+                {
+                    return;
+                }
+                
+                else if (gameObject.CompareTag("Enemy"))
                 {
                     if (_playerStats == null)
                     {
                         Debug.LogWarning("Player Stats script not found.");
                     }
                     _playerStats.Experience += _exp;
+                    Destroy(gameObject);
 
                 }
                 else if (gameObject.CompareTag("Player"))
@@ -133,7 +139,7 @@ public class Stats : MonoBehaviour
 
 
     [Header("Exp stuff")]
-    private int _exp;
+    [SerializeField] private int _exp;
     [HideInInspector] public int Experience
     {
         get { return _exp; }

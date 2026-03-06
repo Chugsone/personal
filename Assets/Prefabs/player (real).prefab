@@ -9924,7 +9924,7 @@ GameObject:
   - component: {fileID: 4745834108619215504}
   - component: {fileID: 723390141528257167}
   - component: {fileID: 9180457573307392626}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: player (real)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -10286,7 +10286,6 @@ MonoBehaviour:
   playerMovement: {fileID: 8483400121755777894}
   reloading: 0
   ShootFX: {fileID: 8300000, guid: 60cd4c1da6b3c534fa43e7e8012b5b25, type: 3}
-  songing: {fileID: 0}
   GodMode: 0
   reloaded: 1
   mag: 8
@@ -10458,6 +10457,7 @@ MonoBehaviour:
   _moveSpeed: 25
   _defense: 0
   _damage: 25
+  _exp: 0
   _expReq: 100
   _expMultiplier: 1.5
   _magazine: 8

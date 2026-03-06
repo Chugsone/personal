@@ -54,7 +54,7 @@ public class Projectiles1 : MonoBehaviour
         {
             pierceCount--;
         }
-        else if (collision.gameObject.CompareTag("Enemy" ) || collision.gameObject.CompareTag("Shield"))
+        else if (collision.gameObject.CompareTag("Enemy"))
         {
             pierceCount--;
             if (collision.gameObject.TryGetComponent<Stats>(out Stats enemyStats))
@@ -66,6 +66,10 @@ public class Projectiles1 : MonoBehaviour
             {
                 Debug.LogError("Enemy has no stats script");
             }
+        }
+        else if (collision.gameObject.CompareTag("Shield"))
+        {
+            pierceCount--;
         }
 
 

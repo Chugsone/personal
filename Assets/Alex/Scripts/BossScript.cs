@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 using UnityEngine.Rendering.Universal;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class BossScript : MonoBehaviour
 { 
@@ -11,6 +12,9 @@ public class BossScript : MonoBehaviour
     [SerializeField] private Light2D bossLight;
     [SerializeField] private Image bossBar;
     [SerializeField] private GameObject deathWarning;
+    [SerializeField] private float attackRange = 40f;
+    [SerializeField] private int explodeDamage = 50;
+
 
     private GameObject projectilePrefab;
     private GameObject circleWarningPrefab;
@@ -77,8 +81,19 @@ public class BossScript : MonoBehaviour
     {
         deathWarning.SetActive(true);
         yield return new WaitForSeconds(3f);
-        deathWarning.SetActive(false);
+        Collider2D nearby = Physics2D.OverlapCircle(transform.position, attackRange);
 
+        if (nearby.gameObject.CompareTag("Player"))
+        {
+            if (playerStats.Health - explodeDamage <= 0f)
+            {
+                SceneManager.LoadScene("Lose");
+                yield break; //return;
+            }
+            
+            
+        }
+        SceneManager.LoadScene("Win");
     }
 
     IEnumerator HandleAttacks()

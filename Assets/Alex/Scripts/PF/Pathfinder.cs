@@ -134,6 +134,32 @@ public class Pathfinder : MonoBehaviour
 
     }
 
+    public void SetBlocked(Collider2D col, bool blocked)
+    {
+        Bounds bounds = col.bounds;
+
+        Vector3Int min = groundTilemap.WorldToCell(bounds.min);
+        Vector3Int max = groundTilemap.WorldToCell(bounds.max);
+
+        for (int x = min.x; x <= max.x; x++)
+        {
+            for (int y = min.y; y <= max.y; y++)
+            {
+                Vector3Int cell = new (x, y, 0);
+
+                int gx = cell.x - gridOrigin.x;
+                int gy = cell.y - gridOrigin.y;
+
+                if (gx >= 0 && gy >= 0 && gx < gridWidth && gy < gridHeight)
+                {
+                    walkableGrid[gx, gy] = !blocked;
+                }
+
+            } 
+        }
+
+    }
+
 
     private int GetDistance(Vector3Int a, Vector3Int b)
     {
