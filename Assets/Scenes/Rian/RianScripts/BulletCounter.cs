@@ -18,7 +18,7 @@ public class BulletCounter : MonoBehaviour
     {
         if (canvas == null)
         {
-            
+            CreateBC();
             return;
         }
         ammo.SetText($"{playerMovement.bullets}|{playerMovement.mag}");

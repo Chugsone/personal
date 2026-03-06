@@ -87,12 +87,14 @@ public class BossScript : MonoBehaviour
         {
             if (playerStats.Health - explodeDamage <= 0f)
             {
+                Destroy(nearby.gameObject);
                 SceneManager.LoadScene("Lose");
                 yield break; //return;
             }
             
             
         }
+        Destroy(player);
         SceneManager.LoadScene("Win");
     }
 
