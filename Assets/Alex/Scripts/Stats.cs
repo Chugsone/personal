@@ -273,6 +273,10 @@ public class Stats : MonoBehaviour
         _expReq = Mathf.RoundToInt(_expReq * _expMultiplier);
         levelUp.Invoke();
         MaxHealth = Mathf.RoundToInt(_maxHealth*1.1f);
+        if (_exp >= _expReq)
+        {
+            LevelUp();
+        }
     }
 
     
