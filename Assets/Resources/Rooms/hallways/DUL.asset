@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DUL
   m_EditorClassIdentifier: 
   size: {x: 62, y: 30}
-  Weight: 3
+  Weight: 1
   tiles:
   - tile: {fileID: 11400000, guid: 401c0c929e42f2b4d892842c0a3b2c1d, type: 2}
     position: {x: -2, y: -15, z: 0}

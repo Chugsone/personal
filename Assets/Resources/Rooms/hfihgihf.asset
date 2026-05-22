@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: hfihgihf
   m_EditorClassIdentifier: 
   size: {x: 62, y: 30}
-  Weight: 1
+  Weight: 10
   tiles:
   - tile: {fileID: 11400000, guid: 401c0c929e42f2b4d892842c0a3b2c1d, type: 2}
     position: {x: -2, y: -15, z: 0}
@@ -5643,6 +5643,9 @@ MonoBehaviour:
   - tile: {fileID: 11400000, guid: 10e13e73d9e115a40be50cc1a68db900, type: 2}
     position: {x: -4, y: 7, z: 0}
     layer: 2
+  BackgroundTiles: []
+  GroundTiles: []
+  DecorationTiles: []
   leftExit: 0
   rightExit: 1
   upExit: 0

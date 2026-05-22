@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: R
   m_EditorClassIdentifier: 
   size: {x: 62, y: 30}
-  Weight: 1
+  Weight: 10
   tiles:
   - tile: {fileID: 11400000, guid: 401c0c929e42f2b4d892842c0a3b2c1d, type: 2}
     position: {x: 4, y: -10, z: 0}
